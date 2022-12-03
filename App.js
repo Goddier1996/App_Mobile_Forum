@@ -1,20 +1,94 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Menu from "./components/menu"
+import Topic from "./pages/Topics"
+import Message from "./pages/messages"
+import Profile from "./pages/ProfilePage"
+import Login from "./pages/Login"
 
-export default function App() {
+
+
+const Stack = createStackNavigator();
+
+
+
+function App() {
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <>
+
+      <NavigationContainer>
+
+        <Stack.Navigator>
+
+          <Stack.Screen options={{
+            title: null,
+            headerMode: 'none',
+          }} name="Menu" component={Menu} />
+
+
+
+
+          <Stack.Screen options={{
+            title: null,
+            headerStyle: {
+              backgroundColor: '#1e2226',
+              borderBottomLeftRadius: 25,
+              borderBottomRightRadius: 25,
+            },
+            headerTintColor: 'white',
+
+          }} name="Topic" component={Topic} />
+
+
+
+
+          <Stack.Screen options={{
+            title: null,
+            headerStyle: {
+              backgroundColor: '#1e2226',
+              borderBottomLeftRadius: 25,
+              borderBottomRightRadius: 25,
+            },
+            headerTintColor: 'white',
+
+          }} name="Message" component={Message} />
+
+
+          <Stack.Screen options={{
+            title: null,
+            headerMode: 'none',
+
+          }} name="Profile" component={Profile} />
+
+
+
+
+          <Stack.Screen options={{
+            title: null,
+            headerStyle: {
+              backgroundColor: '#1e2226',
+              borderBottomLeftRadius: 25,
+              borderBottomRightRadius: 25,
+            },
+            headerTintColor: 'white',
+          }} name="Login" component={Login} />
+
+
+
+        </Stack.Navigator>
+
+
+      </NavigationContainer>
+
+
+    </>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default App;
+
