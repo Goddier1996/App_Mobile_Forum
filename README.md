@@ -27,7 +27,7 @@ Admin control all This App delete topics and more , add new Category.
 
 ## Skils :
 
-FrontEnd - ReactNative , Css and Style npm
+FrontEnd - ReactNative and Style npm
 
 BackEnd - NodeJs , Express , mongoDB
 
