@@ -50,7 +50,7 @@ export default function Topic() {
     }
 
 
-    
+
 
     // move to meesage Page and send data
     const GoToMeesageTopic = async (idTopic, nameTopic) => {
@@ -444,9 +444,6 @@ const styles = StyleSheet.create({
     },
 
 
-
-
-
     container: {
         flex: 1,
         marginTop: 25,
@@ -489,7 +486,6 @@ const styles = StyleSheet.create({
         marginLeft: 150,
         fontSize: 10,
         color: "rgba(0, 0, 0, 0.475)",
-        top: 10
     },
     PublishBy: {
         marginLeft: -40,

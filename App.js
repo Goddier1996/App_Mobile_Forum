@@ -34,11 +34,12 @@ function App() {
           <Stack.Screen options={{
             title: null,
             headerStyle: {
-              backgroundColor: '#1e2226',
+              backgroundColor: 'rgba(128, 128, 128, 0.140)',
+
               borderBottomLeftRadius: 25,
               borderBottomRightRadius: 25,
             },
-            headerTintColor: 'white',
+            headerTintColor: 'gray',
 
           }} name="Topic" component={Topic} />
 
@@ -48,11 +49,11 @@ function App() {
           <Stack.Screen options={{
             title: null,
             headerStyle: {
-              backgroundColor: '#1e2226',
+              backgroundColor: 'rgba(128, 128, 128, 0.140)',
               borderBottomLeftRadius: 25,
               borderBottomRightRadius: 25,
             },
-            headerTintColor: 'white',
+            headerTintColor: 'gray',
 
           }} name="Message" component={Message} />
 
@@ -69,11 +70,11 @@ function App() {
           <Stack.Screen options={{
             title: null,
             headerStyle: {
-              backgroundColor: '#1e2226',
+              backgroundColor: 'rgba(128, 128, 128, 0.140)',
               borderBottomLeftRadius: 25,
               borderBottomRightRadius: 25,
             },
-            headerTintColor: 'white',
+            headerTintColor: 'gray',
           }} name="Login" component={Login} />
 
 
