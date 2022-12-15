@@ -11,18 +11,15 @@ import React from 'react';
 // Admin add new Category
 export default function AddNewCategory() {
 
-
     // popup Alert
     const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
     const [modalVisibleUrl, setModalVisibleUrl] = useState(false);
 
-
+    // input value
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('');
     const [image, setImage] = useState('');
     const [imageTopic, setImageTopic] = useState('');
-
-
 
 
 
@@ -39,10 +36,8 @@ export default function AddNewCategory() {
 
 
 
-
     // cheack value input and url link
     const checkInputValue = async () => {
-
 
         let x = isValidUrl(image)
         let x1 = isValidUrl(imageTopic)
@@ -65,14 +60,11 @@ export default function AddNewCategory() {
         else {
             AddCategory()
         }
-
     }
 
 
 
-
     const AddCategory = async () => {
-
 
         try {
 
@@ -104,15 +96,12 @@ export default function AddNewCategory() {
 
 
 
-
     // close a popUP
     const ClosePopup = async () => {
 
         // DevSettings.reload()
         await Updates.reloadAsync();
     }
-
-
 
 
 
@@ -270,10 +259,6 @@ export default function AddNewCategory() {
         </>
     );
 };
-
-
-
-
 
 
 

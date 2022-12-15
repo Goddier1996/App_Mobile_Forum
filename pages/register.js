@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
-
 // Regiser page add new user to data base
 export default function Register() {
 
@@ -23,7 +22,6 @@ export default function Register() {
     const [male, setMale] = useState(false);
     const [female, setFemale] = useState(false);
     const [gender, setGender] = useState('');
-
 
 
     // Alerts popUp
@@ -53,7 +51,6 @@ export default function Register() {
 
 
 
-
     // check if have this email in data base or Login in data base
     const CheckIfHaveThisEmail = async () => {
 
@@ -76,8 +73,6 @@ export default function Register() {
     }
 
 
-
-
     //check url input image
     const isValidUrl = urlString => {
         var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
@@ -88,7 +83,6 @@ export default function Register() {
             '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
         return !!urlPattern.test(urlString);
     }
-
 
 
 
@@ -139,8 +133,6 @@ export default function Register() {
         }
 
     }
-
-
 
 
 
@@ -225,8 +217,6 @@ export default function Register() {
             return;
         }
     }
-
-
 
 
 
@@ -380,7 +370,6 @@ export default function Register() {
             {/* Alerts */}
 
 
-
             {/* register popup Input all value alert for user when Register */}
             <Modal animationType="slide" transparent={true} visible={modalVisibleInputAllValue}>
 
@@ -402,10 +391,6 @@ export default function Register() {
                 </View>
 
             </Modal>
-
-
-
-
 
 
             {/* register popup Email url not good */}
@@ -431,9 +416,6 @@ export default function Register() {
             </Modal>
 
 
-
-
-
             {/* register popup length Password was mees 6*/}
             <Modal animationType="slide" transparent={true} visible={modalVisibleInputPasswordNotGood}>
 
@@ -456,9 +438,6 @@ export default function Register() {
                 </View>
 
             </Modal>
-
-
-
 
 
             {/* Have this Email or Login try again alert*/}
@@ -486,13 +465,7 @@ export default function Register() {
 
         </>
     );
-
-
 }
-
-
-
-
 
 
 

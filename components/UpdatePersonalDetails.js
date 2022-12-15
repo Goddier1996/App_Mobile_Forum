@@ -6,10 +6,8 @@ import { API } from '../API';
 import * as Updates from 'expo-updates';
 
 
-
 // UserTypeCode 1 this is Public user how Register this App can to do All! and update personal details :)
 export default function UpdatePersonalDetails(props) {
-
 
 
     const [Login, setLogin] = useState('');
@@ -17,7 +15,6 @@ export default function UpdatePersonalDetails(props) {
     const [Password, setPassword] = useState('');
     const [Email, setEmail] = useState('');
     const [LinkFileFoto, setLinkFileFoto] = useState('');
-
 
 
     // close a popUP
@@ -30,15 +27,10 @@ export default function UpdatePersonalDetails(props) {
 
 
 
-
-
     //update user info 
     const updateDateUser = async () => {
 
-
         idUser = props.UserInfo.code;
-
-        //  alert(idUser)
 
         try {
 
@@ -77,9 +69,6 @@ export default function UpdatePersonalDetails(props) {
 
 
 
-
-
-
     // here we set all props info data user , for we can see in placeholder info user
     useEffect(() => {
 
@@ -88,18 +77,12 @@ export default function UpdatePersonalDetails(props) {
         setPassword(props.UserInfo.password)
         setEmail(props.UserInfo.email)
         setLinkFileFoto(props.UserInfo.foto)
-
     }, [])
-
-
-
 
 
 
     return (
         <>
-
-
             <View style={styles.centeredView}>
 
                 <View style={styles.modalView}>
@@ -204,9 +187,6 @@ export default function UpdatePersonalDetails(props) {
         </>
     );
 };
-
-
-
 
 
 

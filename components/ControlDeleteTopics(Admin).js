@@ -10,10 +10,7 @@ import React from 'react';
 export default function ControlDeleteTopics() {
 
 
-
     const [Topics, SetTopics] = useState([]);
-
-
 
 
     const LoadAllTopics = async () => {
@@ -25,41 +22,29 @@ export default function ControlDeleteTopics() {
     }
 
 
-
-
-
     // close a popUP
     const ClosePopup = async () => {
 
         await Updates.reloadAsync();
-
         // DevSettings.reload()
     }
-
-
 
 
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        // alert("Delete " + id)
-
         let res = await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
-
-        // alert("Delete Topic ")
 
         await Updates.reloadAsync();
 
         // DevSettings.reload()
     }
-
 
 
 
     useEffect(() => {
         LoadAllTopics()
     }, [])
-
 
 
 
@@ -116,11 +101,6 @@ export default function ControlDeleteTopics() {
         </>
     );
 };
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

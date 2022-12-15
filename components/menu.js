@@ -7,12 +7,9 @@ import Register from "../pages/register"
 import Profile from "../pages/ProfilePage"
 import infoAbout from "../pages/infoAbout"
 
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from "react";
-
-
 
 
 const Tab = createBottomTabNavigator();
@@ -21,17 +18,12 @@ const Tab = createBottomTabNavigator();
 // menu component
 export default function Menu() {
 
-
-
     const [DataUser, setDataUser] = useState('');
-
-
 
 
     const getDataFromStorge = async () => {
 
         let value = await AsyncStorage.getItem('user')
-
 
         let p = JSON.parse(value)
 
@@ -39,13 +31,9 @@ export default function Menu() {
     }
 
 
-
-
     useEffect(() => {
         getDataFromStorge()
     }, [])
-
-
 
 
 
@@ -121,8 +109,6 @@ export default function Menu() {
         );
 
     }
-
-
 
 
     else {

@@ -1,9 +1,7 @@
 import { Config } from "./config";
 
 
-
 export const API = {
-
 
     CATEGORY: {
         GET: `${Config.API.BASE}/api/category`,
@@ -27,6 +25,4 @@ export const API = {
         LOGIN: `${Config.API.BASE}/api/users/login`,
         FORGET: `${Config.API.BASE}/api/users/Forget`,
     }
-
 }
-

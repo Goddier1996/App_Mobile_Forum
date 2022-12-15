@@ -16,11 +16,8 @@ import AddNewCategory from "./AddNewCategory(Admin)";
 
 
 
-
-
 // UserTypeCode 2 this is Admin Page use this component in ProfilePage
 export default function AdminProfile() {
-
 
 
     const [user, SetUser] = useState([]);
@@ -41,8 +38,6 @@ export default function AdminProfile() {
 
 
 
-
-
     // log out from profile user page , and remove data from AsyncStorage
     const clearStorage = async () => {
 
@@ -51,10 +46,7 @@ export default function AdminProfile() {
         // DevSettings.reload()
 
         await Updates.reloadAsync();
-
-        // alert('Storage successfully cleared!');
     };
-
 
 
 
@@ -69,7 +61,6 @@ export default function AdminProfile() {
         let data = await res.json();
         SetUser(data);
     }
-
 
 
 
@@ -88,7 +79,6 @@ export default function AdminProfile() {
 
 
     
-
     const LoadCountMessagesUser = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
@@ -106,7 +96,6 @@ export default function AdminProfile() {
     // count Categors 
     const LoadCountCategors = async () => {
 
-
         let res = await fetch(`${API.CATEGORY.GET}/countAllCategorys`, { method: 'GET' });
 
         let data = await res.json();
@@ -115,10 +104,8 @@ export default function AdminProfile() {
     }
 
 
-
     // count topics 
     const LoadCountTopics = async () => {
-
 
         let res = await fetch(`${API.TOPICS.GET}/countAllTopics`, { method: 'GET' });
 
@@ -128,11 +115,8 @@ export default function AdminProfile() {
     }
 
 
-
-
     // count Users 
     const LoadCountUsers = async () => {
-
 
         let res = await fetch(`${API.USERS.GET}/countAllUsers`, { method: 'GET' });
 
@@ -142,11 +126,8 @@ export default function AdminProfile() {
     }
 
 
-
-
     // count Message 
     const LoadCountMessages = async () => {
-
 
         let res = await fetch(`${API.MESSAGES.GET}/countMessagesAll`, { method: 'GET' });
 
@@ -154,10 +135,6 @@ export default function AdminProfile() {
 
         SetCountMessages(data)
     }
-
-
-
-
 
 
 
@@ -386,10 +363,6 @@ export default function AdminProfile() {
         </>
     );
 };
-
-
-
-
 
 
 

@@ -10,10 +10,7 @@ import * as Updates from 'expo-updates';
 // show all messages user id
 export default function UserMessages() {
 
-
-
     const [MessagesUser, SetMessagesUse] = useState([]);
-
 
 
     const LoadMessagesUser = async () => {
@@ -29,17 +26,12 @@ export default function UserMessages() {
     }
 
 
-
-
     // close a popUP
     const ClosePopup = async () => {
 
         // DevSettings.reload()
         await Updates.reloadAsync();
-
     }
-
-
 
 
 
@@ -48,13 +40,10 @@ export default function UserMessages() {
 
         let res = await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
 
-        // alert("Delete message")
-
         await Updates.reloadAsync();
 
         // DevSettings.reload()
     }
-
 
 
 
@@ -121,10 +110,6 @@ export default function UserMessages() {
         </>
     );
 };
-
-
-
-
 
 
 

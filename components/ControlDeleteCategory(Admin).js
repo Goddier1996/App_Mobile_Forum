@@ -11,10 +11,7 @@ import React from 'react';
 export default function ControlDeleteCategory() {
 
 
-
     const [category, SetCategory] = useState([])
-
-
 
 
     // show all categors from data base
@@ -28,7 +25,6 @@ export default function ControlDeleteCategory() {
 
 
 
-
     // close a popUP
     const ClosePopup = async () => {
 
@@ -38,14 +34,10 @@ export default function ControlDeleteCategory() {
 
 
 
-
     // user delete from data base Topic
     const DeleteCategory = async (id) => {
 
-
         let res = await fetch(`${API.CATEGORY.GET}/${id}`, { method: 'DELETE' });
-
-        // alert("Delete Topic ")
 
         await Updates.reloadAsync();
 
@@ -54,11 +46,9 @@ export default function ControlDeleteCategory() {
 
 
 
-
     useEffect(() => {
         LoadAllCategors()
     }, [])
-
 
 
 
@@ -114,10 +104,6 @@ export default function ControlDeleteCategory() {
         </>
     );
 };
-
-
-
-
 
 
 

@@ -11,9 +11,7 @@ import Admin from "../components/AdminProfile";
 export default function Profile() {
 
 
-
     const [user, SetUser] = useState([]);
-
 
 
     // load user from data base
@@ -29,14 +27,9 @@ export default function Profile() {
     }
 
 
-
-
     useEffect(() => {
         LoadUser()
     }, [])
-
-
-
 
 
 
@@ -47,7 +40,6 @@ export default function Profile() {
             <UserProfile />
         );
     }
-
 
 
     // UserTypeCode 2 this is a Admin this App

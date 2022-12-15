@@ -6,15 +6,10 @@ import React from 'react';
 import * as Updates from 'expo-updates';
 
 
-
 // here control users Admin Delete
 export default function ControlDeleteUsers() {
 
-
-
     const [users, SetUsers] = useState([]);
-
-
 
 
     // show all users from data base
@@ -27,9 +22,6 @@ export default function ControlDeleteUsers() {
     }
 
 
-
-
-
     // close a popUP
     const ClosePopup = async () => {
 
@@ -40,30 +32,21 @@ export default function ControlDeleteUsers() {
 
 
 
-
-
     //  delete user from data base
     const DeleteUser = async (id) => {
 
-        // alert(id)
         let res = await fetch(`${API.USERS.GET}/${id}`, { method: 'DELETE' });
 
-
         await Updates.reloadAsync();
-
-        // alert("Delete message")
-
 
         // DevSettings.reload()
     }
 
 
 
-
     useEffect(() => {
         LoadAllUsers()
     }, [])
-
 
 
 
@@ -123,11 +106,6 @@ export default function ControlDeleteUsers() {
         </>
     );
 };
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

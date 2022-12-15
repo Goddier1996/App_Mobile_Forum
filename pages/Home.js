@@ -4,15 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { API } from '../API';
 
 
-
-
+// home page
 export default function Home() {
 
 
     const [category, SetCategory] = useState([])
 
     const navigation = useNavigation();
-
 
 
     // show all categors from data base
@@ -26,14 +24,11 @@ export default function Home() {
 
 
 
-
     // send params to topic page
     const idCategory = async (idCategroy, title, topicImage) => {
 
         navigation.navigate("Topic", { id: idCategroy, name: title, topicImage: topicImage })
     }
-
-
 
 
 
@@ -84,7 +79,6 @@ export default function Home() {
 
 
 const styles = StyleSheet.create({
-
 
     list: {
         paddingHorizontal: 5,

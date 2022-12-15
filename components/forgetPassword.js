@@ -7,8 +7,6 @@ import * as Updates from 'expo-updates';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-
-
 // this component user forget password and create new , use this component in Login page
 export default function ForgetPassword() {
 
@@ -29,11 +27,8 @@ export default function ForgetPassword() {
 
 
 
-
-
     // connecy user to forget password , and save the id in AsyncStorage to create new password
     const SignInForgetPassword = async () => {
-
 
         if (Email == '') {
 
@@ -110,8 +105,6 @@ export default function ForgetPassword() {
     }
 
 
-
-
     // create a new password user
     const CreateNewPassword = async () => {
 
@@ -170,8 +163,6 @@ export default function ForgetPassword() {
     }
 
 
-
-
     // close a popUP
     const ClosePopup = async () => {
 
@@ -179,7 +170,6 @@ export default function ForgetPassword() {
 
         // DevSettings.reload()
     }
-
 
 
 
@@ -280,9 +270,6 @@ export default function ForgetPassword() {
 
 
 
-
-
-
             {/* Alerts */}
 
 
@@ -307,8 +294,6 @@ export default function ForgetPassword() {
                 </View>
 
             </Modal>
-
-
 
 
 
@@ -337,8 +322,6 @@ export default function ForgetPassword() {
 
 
 
-
-
             {/*  forget passwort popup ,this is your password now  in data base value alert  */}
             <Modal animationType="slide" transparent={true} visible={modalVisibleYourPasswordWas}>
 
@@ -360,8 +343,6 @@ export default function ForgetPassword() {
                 </View>
 
             </Modal>
-
-
 
 
 
@@ -389,17 +370,8 @@ export default function ForgetPassword() {
 
 
         </>
-
     );
-
-
 }
-
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

@@ -13,10 +13,8 @@ import ForgetPassword from "../components/forgetPassword";
 
 
 
-
 // connect page Login
 export default function Login() {
-
 
   const [Login, setLogin] = useState('');
   const [Password, setPassword] = useState('');
@@ -39,10 +37,6 @@ export default function Login() {
   }
 
 
-
-
-
-
   // check if all input value was in login
   const checkInputValueLogin = async () => {
 
@@ -58,9 +52,6 @@ export default function Login() {
       SignIn()
     }
   }
-
-
-
 
 
   // connect to forum login user
@@ -118,19 +109,14 @@ export default function Login() {
 
       }
 
-
-
     } catch (error) {
       console.log(error);
     }
   }
 
 
-
-
   // connect demo user
   const connectDemoUser = async () => {
-
 
     try {
 
@@ -173,10 +159,6 @@ export default function Login() {
       console.log(error);
     }
   }
-
-
-
-
 
 
 
@@ -287,12 +269,7 @@ export default function Login() {
 
 
 
-
-
-
-
       {/* Alerts */}
-
 
 
       {/* Login popup Input all value alert */}
@@ -319,9 +296,6 @@ export default function Login() {
 
 
 
-
-
-
       {/* Login popup No Have this user alert */}
       <Modal animationType="slide" transparent={true} visible={modalVisibleNotHaveUser}>
 
@@ -345,19 +319,11 @@ export default function Login() {
 
       </Modal>
 
-
-
     </>
 
   );
 
-
 }
-
-
-
-
-
 
 
 
@@ -411,13 +377,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 50
   },
-
-
-
-
-
-
-
   container: {
     marginTop: 110,
   },

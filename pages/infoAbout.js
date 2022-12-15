@@ -3,10 +3,8 @@ import { useState, useEffect } from "react";
 import { API } from '../API';
 
 
-
 // here show info about app and count user topics and more ...
 export default function AboutThisApp() {
-
 
     const [ShowCountTopics, SetShowCountTopics] = useState([]);
     const [ShowCountMessages, SetCountMessages] = useState([]);
@@ -14,10 +12,8 @@ export default function AboutThisApp() {
     const [ShowCountCategory, SetShowCountCategory] = useState([]);
 
 
-
     // count topics 
     const LoadCountTopics = async () => {
-
 
         let res = await fetch(`${API.TOPICS.GET}/countAllTopics`, { method: 'GET' });
 
@@ -27,11 +23,8 @@ export default function AboutThisApp() {
     }
 
 
-
-
     // count Users 
     const LoadCountUsers = async () => {
-
 
         let res = await fetch(`${API.USERS.GET}/countAllUsers`, { method: 'GET' });
 
@@ -41,11 +34,8 @@ export default function AboutThisApp() {
     }
 
 
-
-
     // count Message 
     const LoadCountMessages = async () => {
-
 
         let res = await fetch(`${API.MESSAGES.GET}/countMessagesAll`, { method: 'GET' });
 
@@ -55,11 +45,8 @@ export default function AboutThisApp() {
     }
 
 
-
-
     // count Categors 
     const LoadCountCategors = async () => {
-
 
         let res = await fetch(`${API.CATEGORY.GET}/countAllCategorys`, { method: 'GET' });
 
@@ -67,7 +54,6 @@ export default function AboutThisApp() {
 
         SetShowCountCategory(data)
     }
-
 
 
 
@@ -145,11 +131,6 @@ export default function AboutThisApp() {
 
     );
 }
-
-
-
-
-
 
 
 

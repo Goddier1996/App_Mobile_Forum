@@ -6,14 +6,11 @@ import * as Updates from 'expo-updates';
 
 
 
-
-
 // here control all messages Admin Delete
 export default function ControlDeleteMessages() {
 
 
     const [Messages, SetMessages] = useState([]);
-
 
 
     const LoadAllMessages = async () => {
@@ -25,8 +22,6 @@ export default function ControlDeleteMessages() {
     }
 
 
-
-
     // close a popUP
     const ClosePopup = async () => {
 
@@ -35,14 +30,10 @@ export default function ControlDeleteMessages() {
     }
 
 
-
-
     // user delete meesage from data base
     const DeleteMessage = async (id) => {
 
         let res = await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
-
-        // alert("Delete message")
 
         await Updates.reloadAsync();
 
@@ -50,12 +41,9 @@ export default function ControlDeleteMessages() {
     }
 
 
-
-
     useEffect(() => {
         LoadAllMessages()
     }, [])
-
 
 
 
@@ -113,10 +101,6 @@ export default function ControlDeleteMessages() {
         </>
     );
 };
-
-
-
-
 
 
 

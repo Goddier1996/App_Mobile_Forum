@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
-
+// comment page
 export default function Message() {
 
 
@@ -36,13 +36,10 @@ export default function Message() {
 
         let value = await AsyncStorage.getItem('user')
 
-
         let info = JSON.parse(value)
 
         setDataUser(info)
     }
-
-
 
 
 
@@ -51,13 +48,11 @@ export default function Message() {
 
         let idTopic = route.params.id
 
-
         let res = await fetch(`${API.TOPICS.GET}/${idTopic}`, { method: 'GET' });
 
         let data = await res.json();
         SetLoadMessageTopic(data);
     }
-
 
 
 
@@ -75,7 +70,6 @@ export default function Message() {
 
 
 
-
     // move to login page
     const goToLoginPage = async () => {
 
@@ -83,11 +77,8 @@ export default function Message() {
     }
 
 
-
-
     // check if have input value message
     const inputValueMessage = async () => {
-
 
         if (Message == '') {
 
@@ -98,7 +89,6 @@ export default function Message() {
             AddNewMessage()
         }
     }
-
 
 
 
@@ -136,8 +126,6 @@ export default function Message() {
             console.log(error);
         }
     }
-
-
 
 
 
@@ -383,9 +371,7 @@ export default function Message() {
         );
     }
 
-
 }
-
 
 
 

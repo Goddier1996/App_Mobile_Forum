@@ -11,9 +11,7 @@ import Login from "./pages/Login"
 const Stack = createStackNavigator();
 
 
-
 function App() {
-
 
   return (
 
@@ -30,7 +28,6 @@ function App() {
 
 
 
-
           <Stack.Screen options={{
             title: null,
             headerStyle: {
@@ -40,7 +37,6 @@ function App() {
               borderBottomRightRadius: 25,
             },
             headerTintColor: 'gray',
-
           }} name="Topic" component={Topic} />
 
 
@@ -54,14 +50,12 @@ function App() {
               borderBottomRightRadius: 25,
             },
             headerTintColor: 'gray',
-
           }} name="Message" component={Message} />
 
 
           <Stack.Screen options={{
             title: null,
             headerMode: 'none',
-
           }} name="Profile" component={Profile} />
 
 
@@ -81,15 +75,10 @@ function App() {
 
         </Stack.Navigator>
 
-
       </NavigationContainer>
-
-
     </>
 
   );
 }
 
-
 export default App;
-

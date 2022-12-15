@@ -10,10 +10,7 @@ import * as Updates from 'expo-updates';
 // user all Topics id user
 export default function UserTopic() {
 
-
-
     const [TopicsUser, SetTopicsUser] = useState([]);
-
 
 
     const LoadTopicsUser = async () => {
@@ -29,28 +26,19 @@ export default function UserTopic() {
     }
 
 
-
-
-
     // close a popUP
     const ClosePopup = async () => {
 
         // DevSettings.reload()
         await Updates.reloadAsync();
-
     }
-
 
 
 
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        // alert("Delete " + id)
-
         let res = await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
-
-        // alert("Delete Topic ")
 
         await Updates.reloadAsync();
 
@@ -121,10 +109,6 @@ export default function UserTopic() {
         </>
     );
 };
-
-
-
-
 
 
 

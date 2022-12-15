@@ -17,12 +17,10 @@ import UpdatePersonalDetails from "./UpdatePersonalDetails";
 export default function UserProfile() {
 
 
-
     const [user, SetUser] = useState([]);
 
     const [ShowCountTopicsUser, SetShowCountTopicsUser] = useState([]);
     const [ShowCountMessagesUser, SetShowCountMessagesUser] = useState([]);
-
 
     // pop up model topics and messages user
     const [modalVisibleTopic, setModalVisibleTopic] = useState(false);
@@ -33,19 +31,13 @@ export default function UserProfile() {
     const [modalVisibleUpdateUserInfo, setModalVisibleUpdateUserInfo] = useState(false);
 
 
-
-
     // log out from profile user page , and remove data from AsyncStorage
     const clearStorage = async () => {
 
         await AsyncStorage.clear();
         // DevSettings.reload()
         await Updates.reloadAsync();
-
-        // alert('Storage successfully cleared!');
     };
-
-
 
 
     // load user from data base
@@ -89,8 +81,6 @@ export default function UserProfile() {
 
         SetShowCountMessagesUser(data)
     }
-
-
 
 
 
@@ -282,9 +272,6 @@ export default function UserProfile() {
         </>
     );
 };
-
-
-
 
 
 

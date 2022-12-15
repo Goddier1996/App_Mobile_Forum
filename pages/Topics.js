@@ -6,8 +6,6 @@ import { API } from '../API';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-
-
 // Topic Page show all Topics and add new Topic
 export default function Topic() {
 
@@ -34,9 +32,6 @@ export default function Topic() {
 
 
 
-
-
-
     // load all topics Category what user chioose
     const LoadAllTopicsIdCategory = async () => {
 
@@ -51,7 +46,6 @@ export default function Topic() {
 
 
 
-
     // move to meesage Page and send data
     const GoToMeesageTopic = async (idTopic, nameTopic) => {
 
@@ -59,8 +53,6 @@ export default function Topic() {
 
         navigation.navigate("Message", { id: idTopic, name: nameTopic, CategoryName: nameCategory })
     }
-
-
 
 
     // get data from AsyncStorage check if user connect or not
@@ -75,10 +67,8 @@ export default function Topic() {
 
 
 
-
     // check if all value was input when add new topic
     const checkImputAddNewTopic = async () => {
-
 
         if (NewTopic == '' || MessageTopic == '') {
 
@@ -92,8 +82,6 @@ export default function Topic() {
             AddNewTopic()
         }
     }
-
-
 
 
     // add new topic tp data base
@@ -157,8 +145,6 @@ export default function Topic() {
         SetImageCategory(imageCategory)
 
     }, [])
-
-
 
 
 
@@ -386,9 +372,6 @@ export default function Topic() {
     }
 
 }
-
-
-
 
 
 

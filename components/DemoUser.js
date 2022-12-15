@@ -17,7 +17,6 @@ import UserMessages from "./userMessages";
 export default function DemoUser() {
 
 
-
     const [user, SetUser] = useState([]);
 
     const [ShowCountTopicsUser, SetShowCountTopicsUser] = useState([]);
@@ -31,19 +30,13 @@ export default function DemoUser() {
     const [modalVisibleDemoUserCantChnage, setModalVisibleDemoUserCantChnage] = useState(false);
 
 
-
-
     // log out from profile user page , and remove data from AsyncStorage
     const clearStorage = async () => {
 
         await AsyncStorage.clear();
         // DevSettings.reload()
         await Updates.reloadAsync();
-
-        // alert('Storage successfully cleared!');
     };
-
-
 
 
     // load user from data base
@@ -57,8 +50,6 @@ export default function DemoUser() {
         let data = await res.json();
         SetUser(data);
     }
-
-
 
 
     // here load count topics user with id
@@ -76,7 +67,6 @@ export default function DemoUser() {
 
 
     
-
     const LoadCountMessagesUser = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
@@ -94,12 +84,9 @@ export default function DemoUser() {
     // user demo can't Change info
     const changeMyData = async () => {
 
-        // alert("No you are a demo user!")
-
         // alert
         setModalVisibleDemoUserCantChnage(true)
     }
-
 
 
 
@@ -109,7 +96,6 @@ export default function DemoUser() {
 
         LoadUser()
     }, [])
-
 
 
 
@@ -259,7 +245,6 @@ export default function DemoUser() {
 
             {/* Alerts */}
 
-
             {/*  demo user cant change info ,  alert  */}
             <Modal animationType="slide" transparent={true} visible={modalVisibleDemoUserCantChnage}>
 
@@ -285,9 +270,6 @@ export default function DemoUser() {
         </>
     );
 };
-
-
-
 
 
 
