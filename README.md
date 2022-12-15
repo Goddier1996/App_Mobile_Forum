@@ -6,15 +6,16 @@
 web to connect : https://forum-app-native.netlify.app
 
 Or
+ 
+<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/207296787-617cd11d-149a-4184-8612-3a8c94007d37.jpg">
 
-<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/205444239-b27ca323-3622-45ba-a38d-883813816272.jpg">
 
 Or 
  
  exp://exp.host/@artium/forum
 
  
-
+ 
 ## About App :
 
 This App about Community forum , have Category and Topics all Subjects  , messages.
@@ -26,7 +27,7 @@ Admin control all This App delete topics and more , add new Category.
 
 ## Skils :
 
-FrontEnd - ReactNative , Css and Style npm
+FrontEnd - ReactNative and Style npm
 
 BackEnd - NodeJs , Express , mongoDB
 
