@@ -6,7 +6,7 @@
 web to connect : https://forum-app-native.netlify.app
 
 Or
-
+ 
 <img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/207296787-617cd11d-149a-4184-8612-3a8c94007d37.jpg">
 
 
