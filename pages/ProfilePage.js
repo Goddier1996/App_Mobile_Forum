@@ -27,7 +27,9 @@ export default function Profile() {
     }
 
 
+
     useEffect(() => {
+        
         LoadUser()
     }, [])
 

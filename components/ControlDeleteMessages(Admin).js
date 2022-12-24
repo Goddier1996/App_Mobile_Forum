@@ -1,13 +1,12 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
-import { DevSettings } from 'react-native';
 import { API } from '../API';
 import * as Updates from 'expo-updates';
 
 
 
 // here control all messages Admin Delete
-export default function ControlDeleteMessages() {
+export default function ControlDeleteMessages(props) {
 
 
     const [Messages, SetMessages] = useState([]);
@@ -22,22 +21,14 @@ export default function ControlDeleteMessages() {
     }
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        // DevSettings.reload()
-        await Updates.reloadAsync();
-    }
-
 
     // user delete meesage from data base
     const DeleteMessage = async (id) => {
 
-        let res = await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
+        await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteMessages()
     }
 
 
@@ -57,7 +48,7 @@ export default function ControlDeleteMessages() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteMessages()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -142,15 +133,13 @@ const styles = StyleSheet.create({
 
 
     buttonClose: {
-        top: -20,
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
-
-
 
     notificationList: {
         marginTop: 10,

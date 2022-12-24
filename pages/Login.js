@@ -3,10 +3,8 @@ import { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { API } from '../API';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Updates from 'expo-updates';
-
 
 // use components
 import ForgetPassword from "../components/forgetPassword";
@@ -21,12 +19,11 @@ export default function Login() {
 
   const navigation = useNavigation();
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleForgetPassword, setModalVisibleForgetPassword] = useState(false);
 
   // Alerts popUp
   const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
   const [modalVisibleNotHaveUser, setModalVisibleNotHaveUser] = useState(false);
-
 
 
 
@@ -37,9 +34,9 @@ export default function Login() {
   }
 
 
+
   // check if all input value was in login
   const checkInputValueLogin = async () => {
-
 
     if (Login == '' || Password == '') {
 
@@ -52,6 +49,7 @@ export default function Login() {
       SignIn()
     }
   }
+
 
 
   // connect to forum login user
@@ -100,19 +98,16 @@ export default function Login() {
           LoctionFrom: data.LoctionFrom,
         }
 
-
         AsyncStorage.setItem('user', JSON.stringify(storgeUser))
 
-        // alert('Hello: ' + data.Name)
-
         await Updates.reloadAsync();
-
       }
 
     } catch (error) {
       console.log(error);
     }
   }
+
 
 
   // connect demo user
@@ -149,15 +144,21 @@ export default function Login() {
         LoctionFrom: data.LoctionFrom,
       }
 
-
       AsyncStorage.setItem('user', JSON.stringify(storgeUser))
 
       await Updates.reloadAsync();
 
-
     } catch (error) {
       console.log(error);
     }
+  }
+
+
+
+  // close model Forget Password in ForgetPassword.js
+  const hideModelForgetPassword = () => {
+
+    setModalVisibleForgetPassword(false);
   }
 
 
@@ -217,9 +218,7 @@ export default function Login() {
           </View>
 
 
-
           <View >
-
 
             <View style={styles.styleClickButton}>
               <TouchableOpacity style={styles.loginButton} onPress={() => checkInputValueLogin()}>
@@ -242,7 +241,7 @@ export default function Login() {
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity onPress={() => setModalVisibleForgetPassword(true)}>
               <Text style={styles.forgotPasswordText} >Forgot Password?</Text>
             </TouchableOpacity>
 
@@ -251,10 +250,10 @@ export default function Login() {
               <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}>
+                visible={modalVisibleForgetPassword}>
 
                 {/* active a Component */}
-                <ForgetPassword />
+                <ForgetPassword hideModelForgetPassword={hideModelForgetPassword} />
 
               </Modal>
             </View>

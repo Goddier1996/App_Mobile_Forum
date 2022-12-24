@@ -24,8 +24,6 @@ export default function Message() {
 
     const navigation = useNavigation();
 
-
-
     // Alerts popUp
     const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
 
@@ -95,8 +93,6 @@ export default function Message() {
     // add new meesage to data base
     const AddNewMessage = async () => {
 
-        // alert("add")
-
         try {
             let d = new Date();
             let idTopic = route.params.id
@@ -134,7 +130,6 @@ export default function Message() {
         LoadAllMessagesIdTopics()
         MessageTopic()
         getDataFromStorge()
-
 
         // take params data from topic
         let nameTopic = route.params.name

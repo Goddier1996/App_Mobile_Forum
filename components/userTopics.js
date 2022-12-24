@@ -1,14 +1,13 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import { API } from '../API';
-import * as Updates from 'expo-updates';
+// import * as Updates from 'expo-updates';
 
 
 
 // user all Topics id user
-export default function UserTopic() {
+export default function UserTopic(props) {
 
     const [TopicsUser, SetTopicsUser] = useState([]);
 
@@ -26,29 +25,20 @@ export default function UserTopic() {
     }
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        // DevSettings.reload()
-        await Updates.reloadAsync();
-    }
-
-
 
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        let res = await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
+        await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteTopicsUser()
     }
 
 
 
-
     useEffect(() => {
+
         LoadTopicsUser()
     }, [])
 
@@ -58,7 +48,6 @@ export default function UserTopic() {
     return (
         <>
 
-
             <View style={styles.centeredView}>
 
                 <View style={styles.modalView}>
@@ -67,7 +56,7 @@ export default function UserTopic() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteTopicsUser()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -77,13 +66,10 @@ export default function UserTopic() {
                             <Text style={styles.infotitle}>*you can Delete your Topics here</Text>
                         </View>
 
-
-
                         <FlatList
                             style={styles.notificationList}
                             enableEmptySections={true}
                             data={TopicsUser}
-
                             renderItem={({ item }) => {
                                 return (
                                     <View style={styles.notificationBox}>
@@ -98,14 +84,10 @@ export default function UserTopic() {
                                     </View>
                                 )
                             }} />
-
-
                     </View>
                 </View>
 
             </View>
-
-
         </>
     );
 };
@@ -148,12 +130,12 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        top: -20
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
     notificationList: {
         marginTop: 10,

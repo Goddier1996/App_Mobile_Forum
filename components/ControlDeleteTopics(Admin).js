@@ -7,7 +7,7 @@ import React from 'react';
 
 
 // here control all topics Admin Delete
-export default function ControlDeleteTopics() {
+export default function ControlDeleteTopics(props) {
 
 
     const [Topics, SetTopics] = useState([]);
@@ -22,22 +22,14 @@ export default function ControlDeleteTopics() {
     }
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        await Updates.reloadAsync();
-        // DevSettings.reload()
-    }
-
 
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        let res = await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
+        await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteTopics()
     }
 
 
@@ -58,7 +50,7 @@ export default function ControlDeleteTopics() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteTopics()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -139,12 +131,12 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        top: -20
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
     notificationList: {
         marginTop: 10,

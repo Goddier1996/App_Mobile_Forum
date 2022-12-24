@@ -26,7 +26,6 @@ export default function UserProfile() {
     const [modalVisibleTopic, setModalVisibleTopic] = useState(false);
     const [modalVisibleMessages, setModalVisibleMessages] = useState(false);
 
-
     // Update User Info
     const [modalVisibleUpdateUserInfo, setModalVisibleUpdateUserInfo] = useState(false);
 
@@ -81,6 +80,31 @@ export default function UserProfile() {
 
         SetShowCountMessagesUser(data)
     }
+
+
+
+    // close model delete topics user in UserTopic.js
+    const hideModelDeleteTopicsUser = () => {
+
+        setModalVisibleTopic(false);
+    }
+
+
+
+    // close model delete messages user in UserMessages.js
+    const hideModelUpdateUserInfo = () => {
+
+        setModalVisibleUpdateUserInfo(false);
+    }
+
+
+
+    // close model delete messages user in UserMessages.js
+    const hideModelDeleteMessagesUser = () => {
+
+        setModalVisibleMessages(false);
+    }
+
 
 
 
@@ -202,7 +226,7 @@ export default function UserProfile() {
                             >
 
                                 {/* compoent */}
-                                <UpdatePersonalDetails UserInfo={objUserData} />
+                                <UpdatePersonalDetails UserInfo={objUserData} hideModelUpdateUserInfo={hideModelUpdateUserInfo} />
 
                             </Modal>
                         </View>
@@ -227,8 +251,7 @@ export default function UserProfile() {
                                 visible={modalVisibleTopic}
                             >
 
-                                {/* compoent */}
-                                <UserTopic />
+                                <UserTopic hideModelDeleteTopicsUser={hideModelDeleteTopicsUser} />
 
                             </Modal>
                         </View>
@@ -255,8 +278,7 @@ export default function UserProfile() {
                                 transparent={true}
                                 visible={modalVisibleMessages}>
 
-                                {/* compoent */}
-                                <UserMessages />
+                                <UserMessages hideModelDeleteMessagesUser={hideModelDeleteMessagesUser} />
 
                             </Modal>
                         </View>

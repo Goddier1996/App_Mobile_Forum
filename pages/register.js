@@ -1,7 +1,6 @@
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, StyleSheet, ImageBackground, Modal } from 'react-native';
 import { useState } from "react";
 import { API } from '../API';
-import { DevSettings } from 'react-native';
 import * as Updates from 'expo-updates';
 import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -73,23 +72,10 @@ export default function Register() {
     }
 
 
-    //check url input image
-    const isValidUrl = urlString => {
-        var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
-        return !!urlPattern.test(urlString);
-    }
-
-
 
     // check input all value in register
     const checkInputValueRegister = async () => {
 
-        // let x = isValidUrl(LinkFileFoto)
 
         // check if email input was Good
         let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -121,12 +107,6 @@ export default function Register() {
             return;
         }
 
-        // else if (x == false) {
-
-
-        //     alert("your Ling image not Good!")
-        //     return;
-        // }
 
         else {
             CheckIfHaveThisEmail();
@@ -189,15 +169,13 @@ export default function Register() {
                 }
 
 
-                let res = await fetch(API.USERS.POST, {
+                await fetch(API.USERS.POST, {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify(user)
                 });
-
-                // alert("you Register Welcome")
 
                 // refershPage
                 await Updates.reloadAsync();
@@ -209,8 +187,6 @@ export default function Register() {
 
 
         else if (boolRes == "HaveEmailOrLogin") {
-
-            // alert("have this Email or Login tay Agin")
 
             // alert
             setModalVisibleHaveThisEmail(true)

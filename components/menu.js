@@ -21,14 +21,16 @@ export default function Menu() {
     const [DataUser, setDataUser] = useState('');
 
 
+
     const getDataFromStorge = async () => {
 
         let value = await AsyncStorage.getItem('user')
 
-        let p = JSON.parse(value)
+        let data = JSON.parse(value)
 
-        setDataUser(p)
+        setDataUser(data)
     }
+
 
 
     useEffect(() => {
@@ -48,14 +50,8 @@ export default function Menu() {
                         tabBarShowLabel: false,
                         tabBarActiveBackgroundColor: 'green',
                         tabBarInactiveBackgroundColor: "rgba(0, 0, 0, 0.827)",
-                        // tabBarItemStyle: {
-                        //     // borderRadius: 50,
-                        // },
                     }}
                 >
-
-
-
 
 
                     <Tab.Screen options={{
@@ -122,9 +118,6 @@ export default function Menu() {
                         tabBarShowLabel: false,
                         tabBarActiveBackgroundColor: 'green',
                         tabBarInactiveBackgroundColor: "#1e2226",
-                        // tabBarItemStyle: {
-                        //     // borderRadius: 50,
-                        // },
                     }}
                 >
 

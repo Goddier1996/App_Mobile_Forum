@@ -58,6 +58,7 @@ export default function AboutThisApp() {
 
 
     useEffect(() => {
+
         LoadCountTopics()
         LoadCountUsers()
         LoadCountMessages()
@@ -70,9 +71,7 @@ export default function AboutThisApp() {
     return (
 
         <>
-
             <ImageBackground source={{ uri: 'https://i.postimg.cc/sfKm58XJ/download.jpg' }} style={{ width: '100%', height: '100%' }}>
-
 
                 <View style={styles.TitleForum}>
                     <Text style={styles.infoTitle}>Info About Froum :</Text>
@@ -124,11 +123,8 @@ export default function AboutThisApp() {
 
                 </View>
 
-
             </ImageBackground>
-
         </>
-
     );
 }
 

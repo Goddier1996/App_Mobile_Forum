@@ -1,13 +1,12 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
-import { DevSettings } from 'react-native';
 import { API } from '../API';
 import React from 'react';
 import * as Updates from 'expo-updates';
 
 
 // here control users Admin Delete
-export default function ControlDeleteUsers() {
+export default function ControlDeleteUsers(props) {
 
     const [users, SetUsers] = useState([]);
 
@@ -22,24 +21,14 @@ export default function ControlDeleteUsers() {
     }
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
-    }
-
-
 
     //  delete user from data base
     const DeleteUser = async (id) => {
 
-        let res = await fetch(`${API.USERS.GET}/${id}`, { method: 'DELETE' });
+        await fetch(`${API.USERS.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteUsers()
     }
 
 
@@ -60,7 +49,7 @@ export default function ControlDeleteUsers() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteUsers()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -144,17 +133,14 @@ const styles = StyleSheet.create({
         elevation: 5
     },
 
-
     buttonClose: {
-        top: -20,
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
-
-
 
     notificationList: {
         marginTop: 10,

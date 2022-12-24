@@ -22,12 +22,11 @@ export default function DemoUser() {
     const [ShowCountTopicsUser, SetShowCountTopicsUser] = useState([]);
     const [ShowCountMessagesUser, SetShowCountMessagesUser] = useState([]);
 
-
     // pop up model topics and messages user
     const [modalVisibleTopic, setModalVisibleTopic] = useState(false);
     const [modalVisibleMessages, setModalVisibleMessages] = useState(false);
 
-    const [modalVisibleDemoUserCantChnage, setModalVisibleDemoUserCantChnage] = useState(false);
+    const [modalVisibleDemoUserCantChangeData, setModalVisibleDemoUserCantChangeData] = useState(false);
 
 
     // log out from profile user page , and remove data from AsyncStorage
@@ -66,7 +65,7 @@ export default function DemoUser() {
     }
 
 
-    
+
     const LoadCountMessagesUser = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
@@ -85,7 +84,23 @@ export default function DemoUser() {
     const changeMyData = async () => {
 
         // alert
-        setModalVisibleDemoUserCantChnage(true)
+        setModalVisibleDemoUserCantChangeData(true)
+    }
+
+
+
+    // close model delete topics user in UserTopic.js
+    const hideModelDeleteTopicsUser = () => {
+
+        setModalVisibleTopic(false);
+    }
+
+
+
+    // close model delete messages user in UserMessages.js
+    const hideModelDeleteMessagesUser = () => {
+
+        setModalVisibleMessages(false);
     }
 
 
@@ -190,15 +205,14 @@ export default function DemoUser() {
                             </View>
                         </TouchableOpacity>
 
-                        {/* model user topics user userTopics compoents */}
+                        {/* model user topics user userTopics components */}
                         <View >
                             <Modal
                                 animationType="slide"
                                 transparent={true}
                                 visible={modalVisibleTopic}
                             >
-                                {/* compoent */}
-                                <UserTopic />
+                                <UserTopic hideModelDeleteTopicsUser={hideModelDeleteTopicsUser} />
 
                             </Modal>
                         </View>
@@ -215,16 +229,14 @@ export default function DemoUser() {
                             </View>
                         </TouchableOpacity>
 
-
-                        {/* model user topics user userTopics compoents */}
+                        {/* model user messages user UserMessages components */}
                         <View >
                             <Modal
                                 animationType="slide"
                                 transparent={true}
                                 visible={modalVisibleMessages}>
 
-                                {/* compoent */}
-                                <UserMessages />
+                                <UserMessages hideModelDeleteMessagesUser={hideModelDeleteMessagesUser} />
 
                             </Modal>
                         </View>
@@ -246,7 +258,7 @@ export default function DemoUser() {
             {/* Alerts */}
 
             {/*  demo user cant change info ,  alert  */}
-            <Modal animationType="slide" transparent={true} visible={modalVisibleDemoUserCantChnage}>
+            <Modal animationType="slide" transparent={true} visible={modalVisibleDemoUserCantChangeData}>
 
                 <View style={styles.centeredViewWarring}>
                     <View style={styles.modalViewWarring}>
@@ -259,7 +271,7 @@ export default function DemoUser() {
 
                         <TouchableOpacity
                             style={styles.textStyleCLoseWarring}
-                            onPress={() => setModalVisibleDemoUserCantChnage(!modalVisibleDemoUserCantChnage)}>
+                            onPress={() => setModalVisibleDemoUserCantChangeData(!modalVisibleDemoUserCantChangeData)}>
                             <Text style={{ color: "white", fontWeight: "bold" }} >Close</Text>
                         </TouchableOpacity>
                     </View>
@@ -270,8 +282,6 @@ export default function DemoUser() {
         </>
     );
 };
-
-
 
 
 const styles = StyleSheet.create({
@@ -323,9 +333,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderRadius: 50
     },
-
-
-
 
 
     container: {

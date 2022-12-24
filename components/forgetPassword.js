@@ -2,13 +2,12 @@ import { View, Text, TextInput, Modal, TouchableOpacity, StyleSheet } from 'reac
 import { useState } from "react";
 import { API } from '../API';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import * as Updates from 'expo-updates';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 // this component user forget password and create new , use this component in Login page
-export default function ForgetPassword() {
+export default function ForgetPassword(props) {
 
 
     const [Email, setEmail] = useState('');
@@ -31,8 +30,6 @@ export default function ForgetPassword() {
     const SignInForgetPassword = async () => {
 
         if (Email == '') {
-
-            // alert("input please your Email")
 
             // alert
             setModalVisibleInputAllValue(true)
@@ -64,8 +61,6 @@ export default function ForgetPassword() {
                 // if dont have this email in data base show alert
                 if (data == null) {
 
-                    // alert("no Have this user")
-
                     // alert
                     setModalVisibleNoHaveThisUser(true);
 
@@ -90,13 +85,8 @@ export default function ForgetPassword() {
 
                     setNameuser(currentUser.NameUser)
 
-                    // await alert('Hello: ' + currentUser.NameUser)
-
                     setModalVisible(true)
-
                 }
-
-
 
             } catch (error) {
                 console.log(error);
@@ -133,7 +123,7 @@ export default function ForgetPassword() {
             return;
         }
 
-        
+
         else {
 
             try {
@@ -167,8 +157,6 @@ export default function ForgetPassword() {
     const ClosePopup = async () => {
 
         await Updates.reloadAsync();
-
-        // DevSettings.reload()
     }
 
 
@@ -184,7 +172,7 @@ export default function ForgetPassword() {
                 <View style={styles.modalView}>
 
                     {/* close popUP */}
-                    <TouchableOpacity style={[styles.button, styles.buttonClose]} onPress={ClosePopup}>
+                    <TouchableOpacity style={[styles.button, styles.buttonClose]} onPress={() => props.hideModelForgetPassword()}>
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
                     </TouchableOpacity>
 
@@ -269,9 +257,7 @@ export default function ForgetPassword() {
 
 
 
-
             {/* Alerts */}
-
 
             {/*  forget passwort popup , Input all value alert  */}
             <Modal animationType="slide" transparent={true} visible={modalVisibleInputAllValue}>
@@ -423,10 +409,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderRadius: 50
     },
-
-
-
-
 
 
     // popup chnage password

@@ -78,7 +78,7 @@ export default function AdminProfile() {
     }
 
 
-    
+
     const LoadCountMessagesUser = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
@@ -115,6 +115,7 @@ export default function AdminProfile() {
     }
 
 
+
     // count Users 
     const LoadCountUsers = async () => {
 
@@ -126,6 +127,7 @@ export default function AdminProfile() {
     }
 
 
+
     // count Message 
     const LoadCountMessages = async () => {
 
@@ -134,6 +136,46 @@ export default function AdminProfile() {
         let data = await res.json();
 
         SetCountMessages(data)
+    }
+
+
+
+    // close model add new category in AddNewCategory.js
+    const hideModelAddNewCategory = () => {
+
+        setModalVisibleAddNewCagtegory(false);
+    }
+
+
+
+    // close model delete category in ControlDeleteCategory.js
+    const hideModelDeleteCategory = () => {
+
+        setModalVisibleDeleteCategory(false);
+    }
+
+
+
+    // close model delete topics in ControlDeleteTopics.js
+    const hideModelDeleteTopics = () => {
+
+        setModalVisibleDeleteTopics(false);
+    }
+
+
+
+    // close model delete messages in ControlDeleteMessages.js
+    const hideModelDeleteMessages = () => {
+
+        setModalVisibleDeleteMessages(false);
+    }
+
+
+
+    // close model delete users in ControlDeleteUsers.js
+    const hideModelDeleteUsers = () => {
+
+        setModalVisibleDeleteUsers(false);
     }
 
 
@@ -156,7 +198,6 @@ export default function AdminProfile() {
         <>
 
             <ImageBackground source={{ uri: "https://i.postimg.cc/sfKm58XJ/download.jpg" }} style={{ width: '100%', height: '100%' }}>
-
 
 
                 <TouchableOpacity style={styles.buttonLogOut} onPress={clearStorage}>
@@ -216,16 +257,12 @@ export default function AdminProfile() {
                     </View>
 
 
-
                     <View style={styles.Control}>
                         <Text style={styles.ControlTitle}>Control Data App :</Text>
                     </View>
 
 
-
                     <View style={styles.menuWrapper}>
-
-
 
 
                         {/* Category */}
@@ -245,7 +282,7 @@ export default function AdminProfile() {
                             >
 
                                 {/* compoent */}
-                                <ControlDeleteCategory />
+                                <ControlDeleteCategory hideModelDeleteCategory={hideModelDeleteCategory} />
 
                             </Modal>
                         </View>
@@ -261,7 +298,6 @@ export default function AdminProfile() {
                             </View>
                         </TouchableOpacity>
 
-
                         {/* model user topics user userTopics component */}
                         <View >
                             <Modal
@@ -271,11 +307,10 @@ export default function AdminProfile() {
                             >
 
                                 {/* compoent */}
-                                <ControlDeleteTopics />
+                                <ControlDeleteTopics hideModelDeleteTopics={hideModelDeleteTopics} />
 
                             </Modal>
                         </View>
-
 
 
 
@@ -288,7 +323,6 @@ export default function AdminProfile() {
                             </View>
                         </TouchableOpacity>
 
-
                         <View >
                             <Modal
                                 animationType="slide"
@@ -296,7 +330,7 @@ export default function AdminProfile() {
                                 visible={modalVisibleDeleteMessages}>
 
                                 {/* compoent */}
-                                <ControlDeleteMessages />
+                                <ControlDeleteMessages hideModelDeleteMessages={hideModelDeleteMessages} />
 
                             </Modal>
                         </View>
@@ -312,8 +346,6 @@ export default function AdminProfile() {
                             </View>
                         </TouchableOpacity>
 
-
-
                         {/* model user topics user userTopics compoents */}
                         <View >
                             <Modal
@@ -322,7 +354,7 @@ export default function AdminProfile() {
                                 visible={modalVisibleDeleteUsers}>
 
                                 {/* compoent */}
-                                <ControlDeleteUsers />
+                                <ControlDeleteUsers hideModelDeleteUsers={hideModelDeleteUsers} />
 
                             </Modal>
                         </View>
@@ -339,7 +371,6 @@ export default function AdminProfile() {
 
                         </TouchableOpacity>
 
-
                         {/* model user topics user userTopics compoents */}
                         <View >
                             <Modal
@@ -348,7 +379,7 @@ export default function AdminProfile() {
                                 visible={modalVisibleAddNewCagtegory}>
 
                                 {/* compoent */}
-                                <AddNewCategory />
+                                <AddNewCategory hideModelAddCategory={hideModelAddNewCategory} />
 
                             </Modal>
                         </View>

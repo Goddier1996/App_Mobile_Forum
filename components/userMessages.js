@@ -1,14 +1,13 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import { API } from '../API';
-import * as Updates from 'expo-updates';
+// import * as Updates from 'expo-updates';
 
 
 
 // show all messages user id
-export default function UserMessages() {
+export default function UserMessages(props) {
 
     const [MessagesUser, SetMessagesUse] = useState([]);
 
@@ -26,23 +25,13 @@ export default function UserMessages() {
     }
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        // DevSettings.reload()
-        await Updates.reloadAsync();
-    }
-
-
-
     // user delete meesage from data base
     const DeleteMessage = async (id) => {
 
-        let res = await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
+        fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteMessagesUser()
     }
 
 
@@ -53,18 +42,16 @@ export default function UserMessages() {
 
 
 
-
     return (
         <>
             <View style={styles.centeredView}>
 
                 <View style={styles.modalView}>
 
-
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteMessagesUser()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -80,16 +67,13 @@ export default function UserMessages() {
                             style={styles.notificationList}
                             enableEmptySections={true}
                             data={MessagesUser}
-
                             renderItem={({ item }) => {
                                 return (
                                     <View style={styles.notificationBox}>
 
-
                                         <TouchableOpacity onPress={() => DeleteMessage(item._id)}>
                                             <Image style={styles.icon} source={{ uri: 'https://i.postimg.cc/nVg1pYzV/icons8-recycle-bin-64.png' }} />
                                         </TouchableOpacity>
-
 
                                         <Text style={styles.date}>{item.DatePublished}</Text>
 
@@ -97,16 +81,10 @@ export default function UserMessages() {
                                     </View>
                                 )
                             }} />
-
-
                     </View>
                 </View>
 
             </View>
-
-
-
-
         </>
     );
 };
@@ -149,17 +127,14 @@ const styles = StyleSheet.create({
         elevation: 5
     },
 
-
     buttonClose: {
-        top: -20,
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
-
-
 
     notificationList: {
         marginTop: 10,

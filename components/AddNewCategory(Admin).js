@@ -2,14 +2,13 @@ import { View, StyleSheet, Text, Modal, TouchableOpacity, TextInput } from 'reac
 import { useState } from "react";
 import * as Updates from 'expo-updates';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { DevSettings } from 'react-native';
 import { API } from '../API';
 import React from 'react';
 
 
 
 // Admin add new Category
-export default function AddNewCategory() {
+export default function AddNewCategory(props) {
 
     // popup Alert
     const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
@@ -25,6 +24,7 @@ export default function AddNewCategory() {
 
     //check url input image
     const isValidUrl = urlString => {
+
         var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
             '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
@@ -36,7 +36,7 @@ export default function AddNewCategory() {
 
 
 
-    // cheack value input and url link
+    // check value input and url link
     const checkInputValue = async () => {
 
         let x = isValidUrl(image)
@@ -45,13 +45,11 @@ export default function AddNewCategory() {
 
         if (title == '' || color == '' || image == '' || imageTopic == '') {
 
-            // alert("input please all value")
             setModalVisibleInputAllValue(true)
         }
 
-        else if (x == false || x1 == false) {
 
-            // alert("Url link not Good !")
+        else if (x == false || x1 == false) {
 
             setModalVisibleUrl(true)
         }
@@ -85,23 +83,13 @@ export default function AddNewCategory() {
             });
 
             // refershPage
-            // DevSettings.reload()
             await Updates.reloadAsync();
 
         } catch (error) {
             console.log(error);
         }
-
     }
 
-
-
-    // close a popUP
-    const ClosePopup = async () => {
-
-        // DevSettings.reload()
-        await Updates.reloadAsync();
-    }
 
 
 
@@ -115,7 +103,7 @@ export default function AddNewCategory() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelAddCategory()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -123,7 +111,6 @@ export default function AddNewCategory() {
                         <View style={styles.titleCategoryUser}>
                             <Text style={styles.title}>Add New Category :</Text>
                         </View>
-
 
 
                         <View >
@@ -156,8 +143,6 @@ export default function AddNewCategory() {
                             </View>
 
 
-
-
                             <View style={styles.inputBox}>
                                 <TextInput
                                     style={styles.input}
@@ -170,8 +155,7 @@ export default function AddNewCategory() {
                                 />
                             </View>
 
-
-
+                            
                             <View style={styles.inputBox}>
                                 <TextInput
                                     style={styles.input}
@@ -348,12 +332,12 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        top: -20
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
     notificationList: {
         marginTop: 10,

@@ -20,11 +20,9 @@ export default function Topic() {
     const [NewTopic, setNewTopic] = useState('');
     const [MessageTopic, setMessageTopic] = useState('');
 
-
     const route = useRoute();
 
     const navigation = useNavigation();
-
 
     // Alerts popUp
     const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
@@ -55,6 +53,7 @@ export default function Topic() {
     }
 
 
+
     // get data from AsyncStorage check if user connect or not
     const getData = async () => {
 
@@ -82,6 +81,7 @@ export default function Topic() {
             AddNewTopic()
         }
     }
+
 
 
     // add new topic tp data base
@@ -121,8 +121,7 @@ export default function Topic() {
 
 
 
-
-    // mobe to page Login
+    // move to page Login
     const signInGoToLoginPage = async () => {
 
         navigation.navigate("Login")
@@ -136,14 +135,12 @@ export default function Topic() {
         getData()
         LoadAllTopicsIdCategory()
 
-
         // take params from Home page Category data
         let nameCategory = route.params.name
         SetTitleCategory(nameCategory)
 
         let imageCategory = route.params.topicImage
         SetImageCategory(imageCategory)
-
     }, [])
 
 
@@ -173,7 +170,6 @@ export default function Topic() {
 
                                     <>
                                         <ScrollView>
-
 
 
                                             <View style={styles.closeBtn}>
@@ -254,6 +250,7 @@ export default function Topic() {
 
 
 
+                    {/* show all cards was in Topic */}
                     <View style={styles.container}>
                         <FlatList
                             style={styles.contentList}
@@ -275,12 +272,10 @@ export default function Topic() {
                             }} />
                     </View>
 
+
                     <View style={styles.spaceFree}></View>
 
                 </ImageBackground>
-
-
-
 
 
 
@@ -328,16 +323,15 @@ export default function Topic() {
 
                     <View style={styles.centeredView}>
 
-                        <TouchableOpacity style={[styles.buttonSignIn, styles.buttonSignInStyle]}>
-                            <Text onPress={() => signInGoToLoginPage()} style={styles.textStyle}>Sign In ( add new Topic )</Text>
+                        <TouchableOpacity onPress={() => signInGoToLoginPage()} style={[styles.buttonSignIn, styles.buttonSignInStyle]}>
+                            <Text style={styles.textStyle}>Sign In ( add new Topic )</Text>
                         </TouchableOpacity>
 
                     </View>
 
 
 
-
-
+                    {/* show all cards was in Topic */}
                     <View style={styles.container}>
                         <FlatList
                             style={styles.contentList}
@@ -361,6 +355,7 @@ export default function Topic() {
                                 )
                             }} />
                     </View>
+
 
                     <View style={styles.spaceFree}></View>
 

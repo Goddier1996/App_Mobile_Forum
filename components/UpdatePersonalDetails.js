@@ -1,7 +1,6 @@
-import { View, TextInput, StyleSheet, Text, Pressable, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import { API } from '../API';
 import * as Updates from 'expo-updates';
 
@@ -16,14 +15,6 @@ export default function UpdatePersonalDetails(props) {
     const [Email, setEmail] = useState('');
     const [LinkFileFoto, setLinkFileFoto] = useState('');
 
-
-    // close a popUP
-    const ClosePopup = async () => {
-
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
-    }
 
 
 
@@ -52,13 +43,9 @@ export default function UpdatePersonalDetails(props) {
             });
 
 
-            // alert("Update done successfully")
-
             await AsyncStorage.clear();
 
             await Updates.reloadAsync();
-
-            // DevSettings.reload()
 
 
         } catch (error) {
@@ -81,106 +68,110 @@ export default function UpdatePersonalDetails(props) {
 
 
 
+
     return (
         <>
             <View style={styles.centeredView}>
 
                 <View style={styles.modalView}>
 
-                    {/* close popUP */}
-                    <Pressable
-                        style={[styles.buttonClose]} onPress={ClosePopup}>
-                        <Text style={styles.Close}>X</Text>
-                    </Pressable>
-
-                    <View style={styles.titleTopicUser}>
-                        <Text style={styles.title}>{props.UserInfo.name} update your personal details </Text>
-                    </View>
-
                     <View >
 
-                        <View style={styles.inputBox}>
-                            <TextInput
-                                style={styles.input}
-                                autoCapitalize={false}
-                                onChangeText={setLogin}
-                                value={Login}
-                                placeholder="Login"
-                                keyboardType='default'
-                                placeholderTextColor={'black'}
-                            />
-                        </View>
-
-
-                        <View style={styles.inputBox}>
-                            <TextInput
-                                style={styles.input}
-                                autoCapitalize={false}
-                                placeholder="name"
-                                onChangeText={setName}
-                                value={Name}
-                                keyboardType='default'
-                                placeholderTextColor={'black'}
-                            />
-
-
-                        </View>
-
-
-                        <View style={styles.inputBox}>
-                            <TextInput
-                                style={styles.input}
-                                autoCapitalize={false}
-                                secureTextEntry={true}
-                                placeholder="password"
-                                onChangeText={setPassword}
-                                value={Password}
-                                keyboardType='numeric'
-                                placeholderTextColor={'black'}
-                            />
-                        </View>
-
-
-
-                        <View style={styles.inputBox}>
-                            <TextInput
-                                style={styles.input}
-                                autoCapitalize={false}
-                                placeholder="Email"
-                                onChangeText={setEmail}
-                                value={Email}
-                                keyboardType='email-address'
-                                placeholderTextColor={'black'}
-                            />
-                        </View>
-
-
-
-
-
-                        <View style={styles.inputBox}>
-                            <TextInput
-                                style={styles.input}
-                                autoCapitalize={false}
-                                placeholder="add Foto Link"
-                                onChangeText={setLinkFileFoto}
-                                value={LinkFileFoto}
-                                keyboardType='url'
-                                placeholderTextColor={'black'}
-                            />
-                            <Text style={styles.infoInputLink}>*No need to add a picture</Text>
-                        </View>
-
-
-                    </View>
-
-                    <View style={styles.buttonClick}>
-                        <TouchableOpacity style={styles.ChangeButton}>
-                            <Text style={styles.ChangeButtonText} onPress={updateDateUser} >Let's Change Your Info</Text>
+                        {/* close popUP */}
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelUpdateUserInfo()}>
+                            <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
-                    </View>
-                </View>
 
+
+                        <View style={styles.titleTopicUser}>
+                            <Text style={styles.title}>{props.UserInfo.name} update your personal details </Text>
+                        </View>
+
+                        <View >
+
+                            <View style={styles.inputBox}>
+                                <TextInput
+                                    style={styles.input}
+                                    autoCapitalize={false}
+                                    onChangeText={setLogin}
+                                    value={Login}
+                                    placeholder="Login"
+                                    keyboardType='default'
+                                    placeholderTextColor={'black'}
+                                />
+                            </View>
+
+
+                            <View style={styles.inputBox}>
+                                <TextInput
+                                    style={styles.input}
+                                    autoCapitalize={false}
+                                    placeholder="name"
+                                    onChangeText={setName}
+                                    value={Name}
+                                    keyboardType='default'
+                                    placeholderTextColor={'black'}
+                                />
+
+
+                            </View>
+
+
+                            <View style={styles.inputBox}>
+                                <TextInput
+                                    style={styles.input}
+                                    autoCapitalize={false}
+                                    secureTextEntry={true}
+                                    placeholder="password"
+                                    onChangeText={setPassword}
+                                    value={Password}
+                                    keyboardType='numeric'
+                                    placeholderTextColor={'black'}
+                                />
+                            </View>
+
+
+
+                            <View style={styles.inputBox}>
+                                <TextInput
+                                    style={styles.input}
+                                    autoCapitalize={false}
+                                    placeholder="Email"
+                                    onChangeText={setEmail}
+                                    value={Email}
+                                    keyboardType='email-address'
+                                    placeholderTextColor={'black'}
+                                />
+                            </View>
+
+
+
+
+
+                            <View style={styles.inputBox}>
+                                <TextInput
+                                    style={styles.input}
+                                    autoCapitalize={false}
+                                    placeholder="add Foto Link"
+                                    onChangeText={setLinkFileFoto}
+                                    value={LinkFileFoto}
+                                    keyboardType='url'
+                                    placeholderTextColor={'black'}
+                                />
+                                <Text style={styles.infoInputLink}>*No need to add a picture</Text>
+                            </View>
+
+
+                        </View>
+
+                        <View style={styles.buttonClick}>
+                            <TouchableOpacity style={styles.ChangeButton}>
+                                <Text style={styles.ChangeButtonText} onPress={updateDateUser} >Let's Change Your Info</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </View>
             </View>
 
 
@@ -226,12 +217,13 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        top: -20
+        display: 'flex',
+        justifyContent: 'flex-end',
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
+        top: "-35%"
     },
     notificationList: {
         marginTop: 10,
@@ -264,13 +256,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
 
-
-
-
-
-
-
-
     input: {
         width: 300,
         height: 45,
@@ -281,7 +266,6 @@ const styles = StyleSheet.create({
     inputBox: {
         marginTop: 10,
     },
-
 
 
     buttonClick: {

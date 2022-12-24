@@ -1,14 +1,12 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
-import { DevSettings } from 'react-native';
-import * as Updates from 'expo-updates';
 import { API } from '../API';
 import React from 'react';
 
 
 
 // here control Category Admin Delete
-export default function ControlDeleteCategory() {
+export default function ControlDeleteCategory(props) {
 
 
     const [category, SetCategory] = useState([])
@@ -25,23 +23,13 @@ export default function ControlDeleteCategory() {
 
 
 
-    // close a popUP
-    const ClosePopup = async () => {
-
-        // DevSettings.reload()
-        await Updates.reloadAsync();
-    }
-
-
-
     // user delete from data base Topic
     const DeleteCategory = async (id) => {
 
-        let res = await fetch(`${API.CATEGORY.GET}/${id}`, { method: 'DELETE' });
+        await fetch(`${API.CATEGORY.GET}/${id}`, { method: 'DELETE' });
 
-        await Updates.reloadAsync();
-
-        // DevSettings.reload()
+        // await Updates.reloadAsync();
+        await props.hideModelDeleteCategory()
     }
 
 
@@ -63,7 +51,7 @@ export default function ControlDeleteCategory() {
                     <View >
 
                         {/* close popUP */}
-                        <TouchableOpacity style={[styles.buttonClose]} onPress={ClosePopup}>
+                        <TouchableOpacity style={[styles.buttonClose]} onPress={() => props.hideModelDeleteCategory()}>
                             <Text style={styles.Close}>X</Text>
                         </TouchableOpacity>
 
@@ -143,12 +131,12 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        top: -20
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     Close: {
         color: "black",
         fontSize: 25,
-        marginLeft: 230,
     },
     notificationList: {
         marginTop: 10,
