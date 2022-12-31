@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { useState, useEffect } from "react";
-import { API } from '../API';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { LoadCategors } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseCategory } from "../Api/DeleteDataFromApi"
 
 
 
@@ -15,10 +15,7 @@ export default function ControlDeleteCategory(props) {
     // show all categors from data base
     const LoadAllCategors = async () => {
 
-        let res = await fetch(API.CATEGORY.GET, { method: 'GET' });
-        let data = await res.json();
-
-        SetCategory(data);
+        SetCategory(await LoadCategors());
     }
 
 
@@ -26,15 +23,15 @@ export default function ControlDeleteCategory(props) {
     // user delete from data base Topic
     const DeleteCategory = async (id) => {
 
-        await fetch(`${API.CATEGORY.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseCategory(id);
 
-        // await Updates.reloadAsync();
-        await props.hideModelDeleteCategory()
+        await props.hideModelDeleteCategory();
     }
 
 
 
     useEffect(() => {
+
         LoadAllCategors()
     }, [])
 

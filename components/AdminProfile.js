@@ -1,18 +1,15 @@
 import { View, SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, Modal, ImageBackground } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DevSettings } from 'react-native';
 import IconUser from 'react-native-vector-icons/MaterialCommunityIcons';
-import { API } from '../API';
 import * as Updates from 'expo-updates';
-
-
 // use components
 import ControlDeleteCategory from "./ControlDeleteCategory(Admin)";
 import ControlDeleteMessages from "./ControlDeleteMessages(Admin)";
 import ControlDeleteTopics from "./ControlDeleteTopics(Admin)";
 import ControlDeleteUsers from "./ControlDeleteUsers(Admin)";
 import AddNewCategory from "./AddNewCategory(Admin)";
+import { LoadUserFromDataBase, CountTopicsUser, CountMessagesUser, LoadCountCategors, LoadCountTopics, LoadCountUsers, LoadCountMessages } from "../Api/LoadDataFromApi";
 
 
 
@@ -56,86 +53,30 @@ export default function AdminProfile() {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.USERS.GET}/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-        SetUser(data);
+        SetUser(await LoadUserFromDataBase(currentUser.idUser));
     }
 
 
 
-    // here load count topics user with id
-    const LoadCountTopicsUser = async () => {
+    // here load count topics , messages with id user
+    const LoadCountUserIdDataTopicsMessages = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.TOPICS.GET}/countTopicsUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountTopicsUser(data)
+        SetShowCountTopicsUser(await CountTopicsUser(currentUser.idUser));
+        SetShowCountMessagesUser(await CountMessagesUser(currentUser.idUser))
     }
 
 
 
-    const LoadCountMessagesUser = async () => {
+    // count Categors , Topics , Messages , Users
+    const LoadCountDataTopicsMessagesUsersCategory = async () => {
 
-        let savedUser = await AsyncStorage.getItem("user");
-        let currentUser = JSON.parse(savedUser);
-
-        let res = await fetch(`${API.MESSAGES.GET}/countMessagesUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountMessagesUser(data)
-    }
-
-
-
-    // count Categors 
-    const LoadCountCategors = async () => {
-
-        let res = await fetch(`${API.CATEGORY.GET}/countAllCategorys`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountCategory(data)
-    }
-
-
-    // count topics 
-    const LoadCountTopics = async () => {
-
-        let res = await fetch(`${API.TOPICS.GET}/countAllTopics`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountTopics(data)
-    }
-
-
-
-    // count Users 
-    const LoadCountUsers = async () => {
-
-        let res = await fetch(`${API.USERS.GET}/countAllUsers`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountUsers(data)
-    }
-
-
-
-    // count Message 
-    const LoadCountMessages = async () => {
-
-        let res = await fetch(`${API.MESSAGES.GET}/countMessagesAll`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetCountMessages(data)
+        SetShowCountCategory(await LoadCountCategors());
+        SetShowCountTopics(await LoadCountTopics());
+        SetShowCountUsers(await LoadCountUsers());
+        SetCountMessages(await LoadCountMessages());
     }
 
 
@@ -181,14 +122,10 @@ export default function AdminProfile() {
 
 
     useEffect(() => {
-        LoadCountTopicsUser()
-        LoadCountMessagesUser()
-        LoadCountCategors()
-        LoadCountTopics()
-        LoadCountUsers()
-        LoadCountMessages()
 
-        LoadUser()
+        LoadCountUserIdDataTopicsMessages();
+        LoadCountDataTopicsMessagesUsersCategory();
+        LoadUser();
     }, [])
 
 

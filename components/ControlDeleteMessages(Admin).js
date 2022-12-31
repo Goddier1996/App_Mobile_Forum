@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
-import { API } from '../API';
-import * as Updates from 'expo-updates';
+import { LoadMessages } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseMessage } from "../Api/DeleteDataFromApi"
 
 
 
@@ -14,10 +14,7 @@ export default function ControlDeleteMessages(props) {
 
     const LoadAllMessages = async () => {
 
-        let res = await fetch(API.MESSAGES.GET, { method: 'GET' });
-        let data = await res.json();
-
-        SetMessages(data);
+        SetMessages(await LoadMessages());
     }
 
 
@@ -25,11 +22,11 @@ export default function ControlDeleteMessages(props) {
     // user delete meesage from data base
     const DeleteMessage = async (id) => {
 
-        await fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseMessage(id);
 
-        // await Updates.reloadAsync();
-        await props.hideModelDeleteMessages()
+        await props.hideModelDeleteMessages();
     }
+
 
 
     useEffect(() => {

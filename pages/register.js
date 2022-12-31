@@ -1,9 +1,10 @@
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, StyleSheet, ImageBackground, Modal } from 'react-native';
 import { useState } from "react";
-import { API } from '../API';
 import * as Updates from 'expo-updates';
 import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AddNewUSer } from "../Api/AddUpdateDataFromApi";
+import { checkIfHaveThisLoginInDataBase, checkIfHaveThisEmailInDataBase } from "../Api/LoadDataFromApi";
 
 
 
@@ -22,6 +23,8 @@ export default function Register() {
     const [female, setFemale] = useState(false);
     const [gender, setGender] = useState('');
 
+    const [checkIfHaveThisLogin, setCheckIfHaveThisLogin] = useState({});
+    const [checkIfHaveThisEmail, setCheckIfHaveThisEmail] = useState({});
 
     // Alerts popUp
     const [modalVisibleInputAllValue, setModalVisibleInputAllValue] = useState(false);
@@ -54,20 +57,21 @@ export default function Register() {
     const CheckIfHaveThisEmail = async () => {
 
         // check if have in data base this login
-        let resLogin = await fetch(`${API.USERS.GET}/FindLogin/${Login}`, { method: 'GET' });
-        let dataLogin = await resLogin.json();
+        setCheckIfHaveThisLogin(await checkIfHaveThisLoginInDataBase(Login));
 
         // check if have in data base this Email
-        let resEmail = await fetch(`${API.USERS.GET}/forgetPassword/${Email}`, { method: 'GET' });
-        let dataEmail = await resEmail.json();
+        setCheckIfHaveThisEmail(await checkIfHaveThisEmailInDataBase(Email));
 
 
-        if (dataEmail == null && dataLogin == null) {
-            Register("NotHaveEmailOrLogin")
+        if (checkIfHaveThisEmail == null) {
+
+            if (checkIfHaveThisLogin == null) {
+                await Register("NotHaveEmailOrLogin");
+            }
         }
 
         else {
-            Register("HaveEmailOrLogin")
+            await Register("HaveEmailOrLogin");
         }
     }
 
@@ -76,7 +80,6 @@ export default function Register() {
     // check input all value in register
     const checkInputValueRegister = async () => {
 
-
         // check if email input was Good
         let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -84,8 +87,7 @@ export default function Register() {
         if (Login == '' || Name == '' || Password == '' || Email == '' || gender == '') {
 
             // alert
-            setModalVisibleInputAllValue(true)
-
+            setModalVisibleInputAllValue(true);
             return;
         }
 
@@ -93,8 +95,7 @@ export default function Register() {
         else if (mailformat.test(Email) == false) {
 
             // alert
-            setModalVisibleInputEmailDontGood(true)
-
+            setModalVisibleInputEmailDontGood(true);
             return;
         }
 
@@ -102,8 +103,7 @@ export default function Register() {
         else if (Password.length < 6) {
 
             // alert
-            setModalVisibleInputPasswordNotGood(true)
-
+            setModalVisibleInputPasswordNotGood(true);
             return;
         }
 
@@ -111,7 +111,6 @@ export default function Register() {
         else {
             CheckIfHaveThisEmail();
         }
-
     }
 
 
@@ -119,70 +118,54 @@ export default function Register() {
     // add new user to data base , this function have data from CheckIfHaveThisEmail
     const Register = async (boolRes) => {
 
-
         if (boolRes == "NotHaveEmailOrLogin") {
 
-            try {
 
-                if (gender == "Male") {
+            if (gender == "Male") {
 
-                    var user = {
-                        Login: Login,
-                        Name: Name,
-                        Password: Password,
-                        Email: Email,
-                        FotoUser: "https://i.postimg.cc/NF66b95t/toppng-com-icons-logos-emojis-user-icon-png-transparent-2400x2305.png",
-                        UserTypeCode: "1",
-                        Gender: gender
-                    };
-                }
-
-
-
-                else if (gender == "Female") {
-
-                    var user = {
-                        Login: Login,
-                        Name: Name,
-                        Password: Password,
-                        Email: Email,
-                        FotoUser: "https://i.postimg.cc/MGJWJnGN/toppng-com-female-user-icon-600x601.png",
-                        UserTypeCode: "1",
-                        Gender: gender
-                    };
-                }
-
-
-
-                else {
-
-                    var user = {
-                        Login: Login,
-                        Name: Name,
-                        Password: Password,
-                        Email: Email,
-                        FotoUser: LinkFileFoto,
-                        UserTypeCode: "1",
-                        Gender: gender
-                    };
-
-                }
-
-
-                await fetch(API.USERS.POST, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(user)
-                });
-
-                // refershPage
-                await Updates.reloadAsync();
-
-            } catch (error) {
-                console.log(error);
+                var user = {
+                    Login: Login,
+                    Name: Name,
+                    Password: Password,
+                    Email: Email,
+                    FotoUser: "https://i.postimg.cc/NF66b95t/toppng-com-icons-logos-emojis-user-icon-png-transparent-2400x2305.png",
+                    UserTypeCode: "1",
+                    Gender: gender
+                };
             }
+
+
+            else if (gender == "Female") {
+
+                var user = {
+                    Login: Login,
+                    Name: Name,
+                    Password: Password,
+                    Email: Email,
+                    FotoUser: "https://i.postimg.cc/MGJWJnGN/toppng-com-female-user-icon-600x601.png",
+                    UserTypeCode: "1",
+                    Gender: gender
+                };
+            }
+
+
+            else {
+
+                var user = {
+                    Login: Login,
+                    Name: Name,
+                    Password: Password,
+                    Email: Email,
+                    FotoUser: LinkFileFoto,
+                    UserTypeCode: "1",
+                    Gender: gender
+                };
+            }
+
+            await AddNewUSer(user);
+
+            // refershPage
+            await Updates.reloadAsync();
         }
 
 

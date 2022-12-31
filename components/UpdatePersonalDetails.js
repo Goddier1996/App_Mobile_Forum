@@ -1,8 +1,9 @@
 import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
 import * as Updates from 'expo-updates';
+import { updateDateUserFromDataBase } from "../Api/AddUpdateDataFromApi";
+
 
 
 // UserTypeCode 1 this is Public user how Register this App can to do All! and update personal details :)
@@ -17,41 +18,23 @@ export default function UpdatePersonalDetails(props) {
 
 
 
-
     //update user info 
     const updateDateUser = async () => {
 
-        idUser = props.UserInfo.code;
+        let idUser = props.UserInfo.code;
 
-        try {
-
-            let user = {
-                Name: Name,
-                Login: Login,
-                Email: Email,
-                Password: Password,
-                FotoUser: LinkFileFoto,
-            }
-
-
-            await fetch(`${API.USERS.GET}/${idUser}`, {
-                method: 'PATCH',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            });
-
-
-            await AsyncStorage.clear();
-
-            await Updates.reloadAsync();
-
-
-        } catch (error) {
-
-            console.log(error)
+        let user = {
+            Name: Name,
+            Login: Login,
+            Email: Email,
+            Password: Password,
+            FotoUser: LinkFileFoto,
         }
+
+        await updateDateUserFromDataBase(user, idUser);
+
+        await AsyncStorage.clear();
+        await Updates.reloadAsync();
     }
 
 
@@ -143,8 +126,6 @@ export default function UpdatePersonalDetails(props) {
                                     placeholderTextColor={'black'}
                                 />
                             </View>
-
-
 
 
 

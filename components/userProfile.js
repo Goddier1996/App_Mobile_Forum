@@ -2,14 +2,13 @@ import { View, SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, Modal, I
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
-import { DevSettings } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { API } from '../API';
-
+import IconAlert from 'react-native-vector-icons/FontAwesome';
 // use components
 import UserTopic from "./userTopics";
 import UserMessages from "./userMessages";
 import UpdatePersonalDetails from "./UpdatePersonalDetails";
+import { LoadUserFromDataBase, CountTopicsUser, CountMessagesUser } from "../Api/LoadDataFromApi";
 
 
 
@@ -25,6 +24,10 @@ export default function UserProfile() {
     // pop up model topics and messages user
     const [modalVisibleTopic, setModalVisibleTopic] = useState(false);
     const [modalVisibleMessages, setModalVisibleMessages] = useState(false);
+
+    // alert demo user cant update data !
+    const [modalVisibleDemoUserCantUpdate, setModalVisibleDemoUserCantUpdate] = useState(false);
+
 
     // Update User Info
     const [modalVisibleUpdateUserInfo, setModalVisibleUpdateUserInfo] = useState(false);
@@ -45,40 +48,19 @@ export default function UserProfile() {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.USERS.GET}/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-        SetUser(data);
+        SetUser(await LoadUserFromDataBase(currentUser.idUser));
     }
 
 
 
-
-    // here load count topics user with id
-    const LoadCountTopicsUser = async () => {
-
-        let savedUser = await AsyncStorage.getItem("user");
-        let currentUser = JSON.parse(savedUser);
-
-        let res = await fetch(`${API.TOPICS.GET}/countTopicsUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountTopicsUser(data)
-    }
-
-
-
-    const LoadCountMessagesUser = async () => {
+    // here load count topics , messages with id user
+    const LoadCountUserIdDataTopicsMessages = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.MESSAGES.GET}/countMessagesUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountMessagesUser(data)
+        SetShowCountTopicsUser(await CountTopicsUser(currentUser.idUser));
+        SetShowCountMessagesUser(await CountMessagesUser(currentUser.idUser))
     }
 
 
@@ -107,7 +89,6 @@ export default function UserProfile() {
 
 
 
-
     // create this , send to component UpdatePersonalDetails data info
     const objUserData = {
 
@@ -116,16 +97,32 @@ export default function UserProfile() {
         login: user.Login,
         email: user.Email,
         password: user.Password,
-        foto: user.FotoUser
+        foto: user.FotoUser,
+    }
+
+
+
+    // check type user , if type was 3 this is demo user can he cant updated data
+    const checkTypeUser = async () => {
+
+        if (user.UserTypeCode != "3") {
+
+            setModalVisibleUpdateUserInfo(true);
+        }
+
+        else {
+            // show alert
+            setModalVisibleDemoUserCantUpdate(true);
+            return;
+        }
     }
 
 
 
 
     useEffect(() => {
-        LoadCountTopicsUser()
-        LoadCountMessagesUser()
 
+        LoadCountUserIdDataTopicsMessages();
         LoadUser()
     }, [])
 
@@ -206,10 +203,8 @@ export default function UserProfile() {
                     <View style={styles.menuWrapper}>
 
 
-
-
                         {/* Update Personal Details */}
-                        <TouchableOpacity onPress={() => setModalVisibleUpdateUserInfo(true)}>
+                        <TouchableOpacity onPress={() => checkTypeUser()}>
 
                             <View style={styles.menuItem}>
                                 <Text style={styles.menuItemText}>Click Update Personal Details</Text>
@@ -232,8 +227,7 @@ export default function UserProfile() {
                         </View>
 
 
-
-
+                        
 
                         {/* Topics */}
                         <TouchableOpacity onPress={() => setModalVisibleTopic(true)}>
@@ -255,8 +249,6 @@ export default function UserProfile() {
 
                             </Modal>
                         </View>
-
-
 
 
 
@@ -283,14 +275,39 @@ export default function UserProfile() {
                             </Modal>
                         </View>
 
-
-
-
                     </View>
                 </SafeAreaView>
 
 
             </ImageBackground>
+
+
+            
+
+            {/* Alerts */}
+
+            {/* Demo User Can't Update Personal Details*/}
+            <Modal animationType="slide" transparent={true} visible={modalVisibleDemoUserCantUpdate}>
+
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+
+                        <IconAlert name="warning" size={80} color="#900" />
+
+                        <Text style={styles.modalTextTitle}>Warning</Text>
+                        <Text style={styles.modalText}>Demo User Can't Update</Text>
+                        <Text style={styles.modalText}>Personal Details</Text>
+
+
+                        <TouchableOpacity
+                            style={styles.textStyleCLose}
+                            onPress={() => setModalVisibleDemoUserCantUpdate(!modalVisibleDemoUserCantUpdate)}>
+                            <Text style={{ color: "white", fontWeight: "bold" }} >Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+            </Modal>
         </>
     );
 };
@@ -426,5 +443,54 @@ const styles = StyleSheet.create({
     icon: {
         width: 40,
         height: 40,
-    }
+    },
+
+    // style alert popup
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'rgba(0, 0, 0, 0.3)'
+    },
+
+    modalView: {
+        width: 320,
+        height: 330,
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 15,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        justifyContent: "center",
+
+    },
+    modalTextTitle: {
+        color: '3#c466a',
+        fontSize: 18,
+        marginTop: 30
+    },
+    modalText: {
+        color: '3#c466a',
+        fontSize: 16,
+        marginTop: 10
+    },
+
+    textStyleCLose: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "red",
+        paddingHorizontal: 30,
+        paddingVertical: 10,
+        marginTop: 30,
+        marginBottom: 20,
+        borderRadius: 50
+    },
 });

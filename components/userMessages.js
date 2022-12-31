@@ -1,13 +1,14 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
-// import * as Updates from 'expo-updates';
+import { LoadMessagesIdUser } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseMessage } from "../Api/DeleteDataFromApi"
 
 
 
 // show all messages user id
 export default function UserMessages(props) {
+
 
     const [MessagesUser, SetMessagesUse] = useState([]);
 
@@ -17,21 +18,17 @@ export default function UserMessages(props) {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.MESSAGES.GET}/PublishBy/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetMessagesUse(data)
+        SetMessagesUse(await LoadMessagesIdUser(currentUser.idUser));
     }
+
 
 
     // user delete meesage from data base
     const DeleteMessage = async (id) => {
 
-        fetch(`${API.MESSAGES.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseMessage(id);
 
-        // await Updates.reloadAsync();
-        await props.hideModelDeleteMessagesUser()
+        await props.hideModelDeleteMessagesUser();
     }
 
 

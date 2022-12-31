@@ -1,8 +1,8 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { useState, useEffect } from "react";
-import { API } from '../API';
-import React from 'react';
-import * as Updates from 'expo-updates';
+import React, { useState, useEffect } from 'react';
+import { LoadUsers } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseUser } from "../Api/DeleteDataFromApi"
+
 
 
 // here control users Admin Delete
@@ -14,10 +14,7 @@ export default function ControlDeleteUsers(props) {
     // show all users from data base
     const LoadAllUsers = async () => {
 
-        let res = await fetch(API.USERS.GET, { method: 'GET' });
-        let data = await res.json();
-
-        SetUsers(data);
+        SetUsers(await LoadUsers());
     }
 
 
@@ -25,10 +22,9 @@ export default function ControlDeleteUsers(props) {
     //  delete user from data base
     const DeleteUser = async (id) => {
 
-        await fetch(`${API.USERS.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseUser(id);
 
-        // await Updates.reloadAsync();
-        await props.hideModelDeleteUsers()
+        await props.hideModelDeleteUsers();
     }
 
 

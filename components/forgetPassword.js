@@ -1,9 +1,9 @@
 import { View, Text, TextInput, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import { useState } from "react";
-import { API } from '../API';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ConnectForgetPassword, NewPasswordUser } from "../Api/AddUpdateDataFromApi";
 
 
 // this component user forget password and create new , use this component in Login page
@@ -33,66 +33,38 @@ export default function ForgetPassword(props) {
 
             // alert
             setModalVisibleInputAllValue(true)
-
             return;
         }
 
         else {
 
-            try {
+            let user =
+            {
+                Email: Email,
+            };
 
-                let user =
-                {
-                    Email: Email,
-                };
+            let resultIfHaveThisEmailInDataBase = await ConnectForgetPassword(user);
 
-                let res = await fetch(API.USERS.FORGET, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(user)
-                });
+            // if dont have this email in data base show alert
+            if (resultIfHaveThisEmailInDataBase == '') {
 
+                // alert
+                setModalVisibleNoHaveThisUser(true);
+                return
+            }
 
-                let data = await res.json();
+            else {
 
+                let savedUser = await AsyncStorage.getItem("userForgetPassword");
+                let currentUser = JSON.parse(savedUser);
 
-                // if dont have this email in data base show alert
-                if (data == null) {
+                setNameuser(currentUser.NameUser);
 
-                    // alert
-                    setModalVisibleNoHaveThisUser(true);
-
-                    return
-                }
-
-
-                else {
-
-                    // data from data base , save in AsyncStorage for chnage to new password user
-                    let storgeUser =
-                    {
-                        idUser: data._id,
-                        NameUser: data.Name,
-                        Password: data.Password
-                    }
-
-                    AsyncStorage.setItem('userForgetPassword', JSON.stringify(storgeUser))
-
-                    let savedUser = await AsyncStorage.getItem("userForgetPassword");
-                    let currentUser = JSON.parse(savedUser);
-
-                    setNameuser(currentUser.NameUser)
-
-                    setModalVisible(true)
-                }
-
-            } catch (error) {
-                console.log(error);
+                setModalVisible(true);
             }
         }
     }
+
 
 
     // create a new password user
@@ -101,56 +73,32 @@ export default function ForgetPassword(props) {
         let savedUser = await AsyncStorage.getItem("userForgetPassword");
         let currentUser = JSON.parse(savedUser);
 
-
         if (currentUser.Password == Password) {
 
-            // alert("This is your password now !")
-
             // alert
-            setModalVisibleYourPasswordWas(true)
-
+            setModalVisibleYourPasswordWas(true);
             return;
         }
-
 
         else if (Password == '') {
 
-            // alert("This is your password now !")
-
             // alert
             setModalVisibleInputPassword(true)
-
             return;
         }
 
-
         else {
 
-            try {
-                let user = {
-                    Password: Password,
-                }
-
-                await fetch(`${API.USERS.GET}/${currentUser.idUser}`, {
-                    method: 'PATCH',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(user)
-                });
-
-                await AsyncStorage.clear();
-
-                await Updates.reloadAsync();
-
-                // DevSettings.reload()
-
-            } catch (error) {
-                console.log(error)
+            let user = {
+                Password: Password,
             }
-        }
+            await NewPasswordUser(user, currentUser.idUser);
 
+            await AsyncStorage.clear();
+            await Updates.reloadAsync();
+        }
     }
+
 
 
     // close a popUP
@@ -164,7 +112,6 @@ export default function ForgetPassword(props) {
     return (
 
         <>
-
             {/* pop up input email to find user how chnage a password */}
 
             <View style={styles.centeredView}>
@@ -195,13 +142,8 @@ export default function ForgetPassword(props) {
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Change Password</Text>
                     </TouchableOpacity>
 
-
-
-
                 </View>
             </View>
-
-
 
 
 
@@ -252,7 +194,6 @@ export default function ForgetPassword(props) {
                 </Modal>
 
             </View>
-
 
 
 
@@ -353,11 +294,10 @@ export default function ForgetPassword(props) {
                 </View>
 
             </Modal>
-
-
         </>
     );
 }
+
 
 
 const styles = StyleSheet.create({

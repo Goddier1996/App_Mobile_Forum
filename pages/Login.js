@@ -1,19 +1,18 @@
 import { View, Text, TextInput, Modal, TouchableOpacity, Image, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { API } from '../API';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Updates from 'expo-updates';
-
 // use components
 import ForgetPassword from "../components/forgetPassword";
+import { ConnectLoginPublicUser, ConnectDemoPublicUser } from "../Api/AddUpdateDataFromApi";
 
 
 
 // connect page Login
 export default function Login() {
 
+  
   const [Login, setLogin] = useState('');
   const [Password, setPassword] = useState('');
 
@@ -55,56 +54,21 @@ export default function Login() {
   // connect to forum login user
   const SignIn = async () => {
 
+    let user =
+    {
+      Login: Login,
+      Password: Password
+    };
 
-    try {
-
-      let user =
-      {
-        Login: Login,
-        Password: Password
-      };
-
-      let res = await fetch(API.USERS.LOGIN, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      });
+    let resultIfHaveThisUserInDataBase = await ConnectLoginPublicUser(user);
 
 
-      let data = await res.json();
+    // if don't have this user show alert
+    if (resultIfHaveThisUserInDataBase == '') {
 
-
-      // if don't have this user show alert
-      if (data == null) {
-
-        // alert
-        setModalVisibleNotHaveUser(true)
-        return
-      }
-
-
-      else {
-
-        // data from data base , save in AsyncStorage for user id profile user
-        let storgeUser =
-        {
-          LoginUser: data.Login,
-          idUser: data._id,
-          FotoUser: data.FotoUser,
-          NameUser: data.Name,
-          Email: data.Email,
-          LoctionFrom: data.LoctionFrom,
-        }
-
-        AsyncStorage.setItem('user', JSON.stringify(storgeUser))
-
-        await Updates.reloadAsync();
-      }
-
-    } catch (error) {
-      console.log(error);
+      // alert
+      setModalVisibleNotHaveUser(true)
+      return
     }
   }
 
@@ -113,44 +77,9 @@ export default function Login() {
   // connect demo user
   const connectDemoUser = async () => {
 
-    try {
+    await ConnectDemoPublicUser();
 
-      let user =
-      {
-        Login: "DemoUser96",
-        Password: "987654321"
-      };
-
-      let res = await fetch(API.USERS.LOGIN, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      });
-
-
-      let data = await res.json();
-
-
-      // data from data base , save in AsyncStorage for user id profile user
-      let storgeUser =
-      {
-        LoginUser: data.Login,
-        idUser: data._id,
-        FotoUser: data.FotoUser,
-        NameUser: data.Name,
-        Email: data.Email,
-        LoctionFrom: data.LoctionFrom,
-      }
-
-      AsyncStorage.setItem('user', JSON.stringify(storgeUser))
-
-      await Updates.reloadAsync();
-
-    } catch (error) {
-      console.log(error);
-    }
+    await Updates.reloadAsync();
   }
 
 

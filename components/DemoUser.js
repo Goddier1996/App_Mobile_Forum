@@ -3,13 +3,11 @@ import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import IconUser from 'react-native-vector-icons/MaterialCommunityIcons';
-import { API } from '../API';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
 // use components
 import UserTopic from "./userTopics";
 import UserMessages from "./userMessages";
+import { LoadUserFromDataBase, CountTopicsUser, CountMessagesUser } from "../Api/LoadDataFromApi";
 
 
 
@@ -29,13 +27,14 @@ export default function DemoUser() {
     const [modalVisibleDemoUserCantChangeData, setModalVisibleDemoUserCantChangeData] = useState(false);
 
 
+
     // log out from profile user page , and remove data from AsyncStorage
     const clearStorage = async () => {
 
         await AsyncStorage.clear();
-        // DevSettings.reload()
         await Updates.reloadAsync();
     };
+
 
 
     // load user from data base
@@ -44,38 +43,19 @@ export default function DemoUser() {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.USERS.GET}/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-        SetUser(data);
-    }
-
-
-    // here load count topics user with id
-    const LoadCountTopicsUser = async () => {
-
-        let savedUser = await AsyncStorage.getItem("user");
-        let currentUser = JSON.parse(savedUser);
-
-        let res = await fetch(`${API.TOPICS.GET}/countTopicsUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountTopicsUser(data)
+        SetUser(await LoadUserFromDataBase(currentUser.idUser));
     }
 
 
 
-    const LoadCountMessagesUser = async () => {
+    // here load count topics , messages with id user
+    const LoadCountUserIdDataTopicsMessages = async () => {
 
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.MESSAGES.GET}/countMessagesUser/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountMessagesUser(data)
+        SetShowCountTopicsUser(await CountTopicsUser(currentUser.idUser));
+        SetShowCountMessagesUser(await CountMessagesUser(currentUser.idUser))
     }
 
 
@@ -106,9 +86,8 @@ export default function DemoUser() {
 
 
     useEffect(() => {
-        LoadCountTopicsUser()
-        LoadCountMessagesUser()
 
+        LoadCountUserIdDataTopicsMessages();
         LoadUser()
     }, [])
 
@@ -282,6 +261,8 @@ export default function DemoUser() {
         </>
     );
 };
+
+
 
 
 const styles = StyleSheet.create({

@@ -1,9 +1,8 @@
 import { View, StyleSheet, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
-import { useState } from "react";
 import * as Updates from 'expo-updates';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { API } from '../API';
-import React from 'react';
+import React, { useState } from 'react';
+import { AddCategoryToDataBase } from "../Api/AddUpdateDataFromApi";
 
 
 
@@ -64,30 +63,17 @@ export default function AddNewCategory(props) {
 
     const AddCategory = async () => {
 
-        try {
+        let category = {
+            title: title,
+            color: color,
+            image: image,
+            imageTopic: imageTopic,
+        };
 
-            let category = {
-                title: title,
-                color: color,
-                image: image,
-                imageTopic: imageTopic,
-            };
+        await AddCategoryToDataBase(category);
 
-
-            let res = await fetch(API.CATEGORY.POST, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(category)
-            });
-
-            // refershPage
-            await Updates.reloadAsync();
-
-        } catch (error) {
-            console.log(error);
-        }
+        // refershPage
+        Updates.reloadAsync();
     }
 
 
@@ -155,7 +141,7 @@ export default function AddNewCategory(props) {
                                 />
                             </View>
 
-                            
+
                             <View style={styles.inputBox}>
                                 <TextInput
                                     style={styles.input}
@@ -243,6 +229,7 @@ export default function AddNewCategory(props) {
         </>
     );
 };
+
 
 
 

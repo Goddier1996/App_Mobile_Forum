@@ -1,8 +1,7 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { useState, useEffect } from "react";
-import * as Updates from 'expo-updates';
-import { API } from '../API';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { LoadTopics } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseTopic } from "../Api/DeleteDataFromApi"
 
 
 
@@ -15,10 +14,7 @@ export default function ControlDeleteTopics(props) {
 
     const LoadAllTopics = async () => {
 
-        let res = await fetch(API.TOPICS.GET, { method: 'GET' });
-        let data = await res.json();
-
-        SetTopics(data);
+        SetTopics(await LoadTopics());
     }
 
 
@@ -26,9 +22,8 @@ export default function ControlDeleteTopics(props) {
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseTopic(id);
 
-        // await Updates.reloadAsync();
         await props.hideModelDeleteTopics()
     }
 

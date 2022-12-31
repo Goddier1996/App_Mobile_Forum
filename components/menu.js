@@ -1,12 +1,10 @@
 import { View, Image } from 'react-native';
-
 // pages
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 import Register from "../pages/register"
 import Profile from "../pages/ProfilePage"
 import infoAbout from "../pages/infoAbout"
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from "react";
@@ -21,20 +19,18 @@ export default function Menu() {
     const [DataUser, setDataUser] = useState('');
 
 
-
     const getDataFromStorge = async () => {
 
-        let value = await AsyncStorage.getItem('user')
-
-        let data = JSON.parse(value)
-
-        setDataUser(data)
+        let value = await AsyncStorage.getItem('user');
+        let data = JSON.parse(value);
+        setDataUser(data);
     }
 
 
 
     useEffect(() => {
-        getDataFromStorge()
+
+        getDataFromStorge();
     }, [])
 
 
@@ -68,8 +64,6 @@ export default function Menu() {
                     }} name="Home" component={Home} />
 
 
-
-
                     <Tab.Screen options={{
                         headerShown: false,
                         tabBarIcon: ({ focused }) => (
@@ -83,7 +77,6 @@ export default function Menu() {
                             </View>
                         )
                     }} name="Profile" component={Profile} />
-
 
 
                     <Tab.Screen options={{
@@ -150,8 +143,6 @@ export default function Menu() {
                     }} name="Login" component={Login} />
 
 
-
-
                     <Tab.Screen options={{
                         headerShown: false,
                         tabBarIcon: ({ focused }) => (
@@ -164,7 +155,6 @@ export default function Menu() {
                             </View>
                         )
                     }} name="Register" component={Register} />
-
 
 
                     <Tab.Screen options={{
@@ -181,13 +171,9 @@ export default function Menu() {
                     }} name="infoAbout" component={infoAbout} />
 
 
-
                 </Tab.Navigator>
-
             </>
         );
-
-
     }
 
 }

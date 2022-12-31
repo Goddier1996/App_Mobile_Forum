@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
 import UserProfile from "../components/userProfile";
-import DemoUser from "../components/DemoUser";
 import Admin from "../components/AdminProfile";
+import { LoadUserFromDataBase } from "../Api/LoadDataFromApi";
 
 
 
@@ -20,23 +19,21 @@ export default function Profile() {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.USERS.GET}/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-        SetUser(data);
+        SetUser(await LoadUserFromDataBase(currentUser.idUser));
     }
 
 
 
     useEffect(() => {
-        
+
         LoadUser()
     }, [])
 
 
 
-    // UserTypeCode 1 this is Public user how Register this App can to do All! and update personal details :)
-    if (user.UserTypeCode === "1") {
+    // UserTypeCode 1 this is Public user how Register this App can to do All! and update personal details.
+    // UserTypeCode 3 this is a demo User(demo user cant update personal details)
+    if (user.UserTypeCode === "1" || user.UserTypeCode === "3") {
 
         return (
             <UserProfile />
@@ -49,16 +46,6 @@ export default function Profile() {
 
         return (
             <Admin />
-        );
-    }
-
-
-    // UserTypeCode 3 this is a demo User
-    if (user.UserTypeCode === "3") {
-
-        return (
-            // demo user cant update personal details
-            <DemoUser />
         );
     }
 

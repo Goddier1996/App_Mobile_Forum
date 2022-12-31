@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, FlatList, } from 'react-native';
 import { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { API } from '../API';
+import { LoadCategors } from "../Api/LoadDataFromApi"
+
 
 
 // home page
@@ -16,10 +17,7 @@ export default function Home() {
     // show all categors from data base
     const LoadAllCategors = async () => {
 
-        let res = await fetch(API.CATEGORY.GET, { method: 'GET' });
-        let data = await res.json();
-
-        SetCategory(data);
+        SetCategory(await LoadCategors());
     }
 
 
@@ -36,7 +34,6 @@ export default function Home() {
 
         LoadAllCategors();
     }, [])
-
 
 
 

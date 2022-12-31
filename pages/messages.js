@@ -2,8 +2,9 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackg
 import { useState, useEffect } from "react";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { LoadMessageTopicInMessagePage, LoadAllMessagesIdTopic } from "../Api/LoadDataFromApi";
+import { AddMessage } from "../Api/AddUpdateDataFromApi";
 
 
 
@@ -11,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default function Message() {
 
 
-    const [topics, SetTopics] = useState([])
+    const [topicsMessage, SetTopicsMessage] = useState([])
     const [LoadMessageTopic, SetLoadMessageTopic] = useState([])
 
     const [DataUser, setDataUser] = useState('');
@@ -29,7 +30,7 @@ export default function Message() {
 
 
 
-    // get daya user from AsyncStorage
+    // get data user from AsyncStorage
     const getDataFromStorge = async () => {
 
         let value = await AsyncStorage.getItem('user')
@@ -42,28 +43,12 @@ export default function Message() {
 
 
     // show  meesage from Topic,take params id from topic
-    const MessageTopic = async () => {
+    const LoadAllMessages = async () => {
 
-        let idTopic = route.params.id
+        let idTopic = route.params.id;
 
-        let res = await fetch(`${API.TOPICS.GET}/${idTopic}`, { method: 'GET' });
-
-        let data = await res.json();
-        SetLoadMessageTopic(data);
-    }
-
-
-
-    // show all all meesages what users send in this topic
-    const LoadAllMessagesIdTopics = async () => {
-
-        let idTopic = route.params.id
-
-        let res = await fetch(`${API.MESSAGES.GET}/${idTopic}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetTopics(data);
+        SetLoadMessageTopic(await LoadMessageTopicInMessagePage(idTopic));
+        SetTopicsMessage(await LoadAllMessagesIdTopic(idTopic));
     }
 
 
@@ -73,6 +58,7 @@ export default function Message() {
 
         navigation.navigate("Login")
     }
+
 
 
     // check if have input value message
@@ -93,43 +79,29 @@ export default function Message() {
     // add new meesage to data base
     const AddNewMessage = async () => {
 
-        try {
-            let d = new Date();
-            let idTopic = route.params.id
+        let d = new Date();
+        let idTopic = route.params.id
 
-            let message = {
-                idTopicMessage: idTopic,
-                MessageUser: Message,
-                DatePublished: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
-                Publish_by: DataUser.idUser,
-                NameUser: DataUser.NameUser,
-                FotoUser: DataUser.FotoUser
-            };
+        let message = {
+            idTopicMessage: idTopic,
+            MessageUser: Message,
+            DatePublished: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+            Publish_by: DataUser.idUser,
+            NameUser: DataUser.NameUser,
+            FotoUser: DataUser.FotoUser
+        };
 
+        await AddMessage(message);
 
-            let res = await fetch(API.MESSAGES.POST, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(message)
-            });
-
-            navigation.goBack()
-
-
-        } catch (error) {
-            console.log(error);
-        }
+        navigation.goBack();
     }
 
 
 
     useEffect(() => {
 
-        LoadAllMessagesIdTopics()
-        MessageTopic()
-        getDataFromStorge()
+        LoadAllMessages();
+        getDataFromStorge();
 
         // take params data from topic
         let nameTopic = route.params.name
@@ -190,7 +162,7 @@ export default function Message() {
 
 
                         {/* show comments */}
-                        {topics.map((item, i) =>
+                        {topicsMessage.map((item, i) =>
 
                             <View key={i} style={styles.container}>
                                 <TouchableOpacity style={styles.borderImage} onPress={() => { }}>
@@ -327,7 +299,7 @@ export default function Message() {
 
 
                         {/* show comments */}
-                        {topics.map((item, i) =>
+                        {topicsMessage.map((item, i) =>
 
                             <View key={i} style={styles.container}>
                                 <TouchableOpacity style={styles.borderImage} onPress={() => { }}>

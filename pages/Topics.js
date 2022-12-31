@@ -2,8 +2,10 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList, ImageBackgro
 import { useState, useEffect } from "react";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { LoadAllTopicsCategory } from "../Api/LoadDataFromApi";
+import { AddTopic } from "../Api/AddUpdateDataFromApi";
+
 
 
 // Topic Page show all Topics and add new Topic
@@ -35,11 +37,7 @@ export default function Topic() {
 
         let idCategory = route.params.id
 
-        let res = await fetch(`${API.TOPICS.GET}/CategoryTopic/${idCategory}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetTopics(data);
+        SetTopics(await LoadAllTopicsCategory(idCategory));
     }
 
 
@@ -87,36 +85,23 @@ export default function Topic() {
     // add new topic tp data base
     const AddNewTopic = async () => {
 
-        try {
-            let d = new Date();
-            let idCategory = route.params.id
+        let d = new Date();
+        let idCategory = route.params.id
 
-            let Topic = {
-                nameTopic: NewTopic,
-                MessageForTopic: MessageTopic,
-                DatePublished: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
-                Publish_by: userData.idUser,
-                imageUser: userData.FotoUser,
-                codeCategory: idCategory,
-                NameUser: userData.NameUser,
-                titleCategory: titleCategory
-            };
+        let Topic = {
+            nameTopic: NewTopic,
+            MessageForTopic: MessageTopic,
+            DatePublished: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+            Publish_by: userData.idUser,
+            imageUser: userData.FotoUser,
+            codeCategory: idCategory,
+            NameUser: userData.NameUser,
+            titleCategory: titleCategory
+        };
 
+        await AddTopic(Topic);
 
-            let res = await fetch(API.TOPICS.POST, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(Topic)
-            });
-
-
-            navigation.navigate("Home")
-
-        } catch (error) {
-            console.log(error);
-        }
+        navigation.navigate("Home")
     }
 
 

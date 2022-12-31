@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, ImageBackground } from 'react-native';
 import { useState, useEffect } from "react";
-import { API } from '../API';
+import { LoadCountTopics, LoadCountUsers, LoadCountMessages, LoadCountCategors } from "../Api/LoadDataFromApi"
+
 
 
 // here show info about app and count user topics and more ...
@@ -12,57 +13,21 @@ export default function AboutThisApp() {
     const [ShowCountCategory, SetShowCountCategory] = useState([]);
 
 
-    // count topics 
-    const LoadCountTopics = async () => {
+    // Load count 
+    const LoadCount = async () => {
 
-        let res = await fetch(`${API.TOPICS.GET}/countAllTopics`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountTopics(data)
+        SetShowCountUsers(await LoadCountUsers());
+        SetShowCountCategory(await LoadCountCategors());
+        SetShowCountTopics(await LoadCountTopics());
+        SetCountMessages(await LoadCountMessages());
     }
 
-
-    // count Users 
-    const LoadCountUsers = async () => {
-
-        let res = await fetch(`${API.USERS.GET}/countAllUsers`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountUsers(data)
-    }
-
-
-    // count Message 
-    const LoadCountMessages = async () => {
-
-        let res = await fetch(`${API.MESSAGES.GET}/countMessagesAll`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetCountMessages(data)
-    }
-
-
-    // count Categors 
-    const LoadCountCategors = async () => {
-
-        let res = await fetch(`${API.CATEGORY.GET}/countAllCategorys`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetShowCountCategory(data)
-    }
 
 
 
     useEffect(() => {
 
-        LoadCountTopics()
-        LoadCountUsers()
-        LoadCountMessages()
-        LoadCountCategors()
+        LoadCount();
     }, [])
 
 

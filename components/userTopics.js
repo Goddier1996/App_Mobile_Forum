@@ -1,13 +1,14 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../API';
-// import * as Updates from 'expo-updates';
+import { LoadTopicsIdUser } from "../Api/LoadDataFromApi";
+import { DeleteFromDataBaseTopic } from "../Api/DeleteDataFromApi"
 
 
 
 // user all Topics id user
 export default function UserTopic(props) {
+
 
     const [TopicsUser, SetTopicsUser] = useState([]);
 
@@ -17,11 +18,7 @@ export default function UserTopic(props) {
         let savedUser = await AsyncStorage.getItem("user");
         let currentUser = JSON.parse(savedUser);
 
-        let res = await fetch(`${API.TOPICS.GET}/PublishBy/${currentUser.idUser}`, { method: 'GET' });
-
-        let data = await res.json();
-
-        SetTopicsUser(data)
+        SetTopicsUser(await LoadTopicsIdUser(currentUser.idUser))
     }
 
 
@@ -29,10 +26,9 @@ export default function UserTopic(props) {
     // user delete from data base Topic
     const DeleteTopic = async (id) => {
 
-        await fetch(`${API.TOPICS.GET}/${id}`, { method: 'DELETE' });
+        await DeleteFromDataBaseTopic(id);
 
-        // await Updates.reloadAsync();
-        await props.hideModelDeleteTopicsUser()
+        await props.hideModelDeleteTopicsUser();
     }
 
 
@@ -51,7 +47,6 @@ export default function UserTopic(props) {
             <View style={styles.centeredView}>
 
                 <View style={styles.modalView}>
-
 
                     <View >
 
