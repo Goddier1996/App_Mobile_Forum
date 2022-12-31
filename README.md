@@ -7,11 +7,11 @@ web to connect : https://forum-app-native.netlify.app
 
 Or
  
-<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/207296787-617cd11d-149a-4184-8612-3a8c94007d37.jpg">
+<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/209435870-f8eda4fa-b69e-48c3-bcd2-dd1e4894a902.jpg">
 
-
-Or 
  
+Or 
+
  exp://exp.host/@artium/forum
 
  
@@ -36,7 +36,7 @@ server This App - https://github.com/Goddier1996/Server_Forum_App
 
 ## Video :
 
-https://user-images.githubusercontent.com/59862302/205442213-1812c3e1-d664-42a9-bbbd-8ffb9bb75749.mp4
+https://user-images.githubusercontent.com/59862302/209435945-499cf3fa-97b0-4d52-bab9-6bdffcd0ad93.mp4
 
 
 ## Images :
