@@ -7,14 +7,10 @@ web to connect : https://forum-app-native.netlify.app
 
 Or
  
-<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/209435870-f8eda4fa-b69e-48c3-bcd2-dd1e4894a902.jpg">
+<img height="200"  width="200" src="https://user-images.githubusercontent.com/59862302/210140930-ea77a89d-2cd0-4d38-b4ff-22c2e31605d1.jpg">
 
  
-Or 
 
- exp://exp.host/@artium/forum
-
- 
   
 ## About App :
 
